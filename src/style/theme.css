@@ -1,0 +1,44 @@
+/* 主题基础样式 */
+/* 科技主题 */
+.technology-theme {
+  --tw-primary: #165DFF;
+  --tw-secondary: #E8F3FF;
+  --tw-accent: #0E42D2;
+}
+
+/* 历史主题 */
+.history-theme {
+  --tw-primary: #9E5A00;
+  --tw-secondary: #FFF8E6;
+  --tw-accent: #7D4600;
+}
+
+/* 生物主题 */
+.biology-theme {
+  --tw-primary: #007849;
+  --tw-secondary: #E6F7EF;
+  --tw-accent: #005C38;
+}
+
+/* 文学主题 */
+.literature-theme {
+  --tw-primary: #6200EE;
+  --tw-secondary: #F3E5F5;
+  --tw-accent: #4527A0;
+}
+
+/* 应用主题变量 */
+.technology-theme .bg-primary {
+  background-color: var(--tw-primary);
+}
+
+.technology-theme .text-primary {
+  color: var(--tw-primary);
+}
+
+.technology-theme .border-primary {
+  border-color: var(--tw-primary);
+}
+
+/* 其他主题类似样式... */
+/* 完整代码请参考项目文件 */

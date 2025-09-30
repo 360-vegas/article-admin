@@ -1,0 +1,484 @@
+buttons:
+  pureLoginOut: 退出系统
+  pureLogin: 登录
+  pureOpenSystemSet: 打开系统配置
+  pureReload: 重新加载
+  pureCloseCurrentTab: 关闭当前标签页
+  pureCloseLeftTabs: 关闭左侧标签页
+  pureCloseRightTabs: 关闭右侧标签页
+  pureCloseOtherTabs: 关闭其他标签页
+  pureCloseAllTabs: 关闭全部标签页
+  pureContentFullScreen: 内容区全屏
+  pureContentExitFullScreen: 内容区退出全屏
+  pureClickCollapse: 点击折叠
+  pureClickExpand: 点击展开
+  pureConfirm: 确认
+  pureSwitch: 切换
+  pureClose: 关闭
+  pureBackTop: 回到顶部
+  pureOpenText: 开
+  pureCloseText: 关
+search:
+  pureTotal: 共
+  pureHistory: 搜索历史
+  pureCollect: 收藏
+  pureDragSort: （可拖拽排序）
+  pureEmpty: 暂无搜索结果
+  purePlaceholder: 搜索菜单（支持拼音搜索）
+panel:
+  pureSystemSet: 系统配置
+  pureCloseSystemSet: 关闭配置
+  pureClearCacheAndToLogin: 清空缓存并返回登录页
+  pureClearCache: 清空缓存
+  pureOverallStyle: 整体风格
+  pureOverallStyleLight: 浅色
+  pureOverallStyleLightTip: 清新启航，点亮舒适的工作界面
+  pureOverallStyleDark: 深色
+  pureOverallStyleDarkTip: 月光序曲，沉醉于夜的静谧雅致
+  pureOverallStyleSystem: 自动
+  pureOverallStyleSystemTip: 同步时光，界面随晨昏自然呼应
+  pureThemeColor: 主题色
+  pureLayoutModel: 导航模式
+  pureVerticalTip: 左侧菜单，亲切熟悉
+  pureHorizontalTip: 顶部菜单，简洁概览
+  pureMixTip: 混合菜单，灵活多变
+  pureDualColumnTip: 双栏模式，左右分栏
+  pureStretch: 页宽
+  pureStretchFixed: 固定
+  pureStretchFixedTip: 紧凑页面，轻松找到所需信息
+  pureStretchCustom: 自定义
+  pureStretchCustomTip: 最小1280、最大1600
+  pureTagsStyle: 页签风格
+  pureTagsStyleSmart: 灵动
+  pureTagsStyleSmartTip: 灵动标签，添趣生辉
+  pureTagsStyleCard: 卡片
+  pureTagsStyleCardTip: 卡片标签，高效浏览
+  pureTagsStyleChrome: 谷歌
+  pureTagsStyleChromeTip: 谷歌风格，经典美观
+  pureInterfaceDisplay: 界面显示
+  pureGreyModel: 灰色模式
+  pureWeakModel: 色弱模式
+  pureHiddenTags: 隐藏标签页
+  pureHiddenFooter: 隐藏页脚
+  pureMultiTagsCache: 页签持久化
+menus:
+  pureHome: 首页
+  pureLogin: 登录
+  pureAbnormal: 异常页面
+  pureFourZeroFour: "404"
+  pureFourZeroOne: "403"
+  pureFive: "500"
+  purePermission: 权限管理
+  purePermissionPage: 页面权限
+  purePermissionButton: 按钮权限
+  purePermissionButtonRouter: 路由返回按钮权限
+  purePermissionButtonLogin: 登录接口返回按钮权限
+  template: 模板
+  templateWorkbench: 模板工作台
+  projects: 项目管理
+  cardLibrary: 卡片库
+  content: 文章
+  contentArticle: 文章
+  contentCategory: 分类
+  contentTag: 词条
+  generate: 生成
+  generateArticle: 文章生成器
+  seo: SEO
+  seoInternalRules: 内链规则（站内）
+  seoExternalStrategy: 外链策略（站外）
+  seoPushConfig: 推送配置
+  seoPushQueue: 推送队列
+  seoRSSNotify: RSS/通知
+  seoRobots: Robot规则
+  seoSitemap: Sitemap
+  seoPush: indexNow推送
+  analytics: 统计
+  analyticsOverview: 概览
+  analyticsMap: 地图
+  analyticsTrend: 趋势
+  analyticsHeat: 热度
+  analyticsTaskMonitor: 任务监控
+  analyticsNetwork: 关系网络
+  api: 接口
+  apiKeys: API 密钥
+  apiOpenAPIDoc: OpenAPI 文档
+  apiContentExport: 内容导出
+  system: 系统
+  systemTaskCenter: 任务中心
+  systemUsersPerms: 用户与权限
+  systemAuditLogs: 审计日志
+  systemBackupRestore: 备份与恢复
+  systemSettings: 系统设置
+  systemCountryPack: 国家包
+  systemI18nTexts: i18n 文案
+  domain: 域名
+  domainManagement: 域名管理
+  domainSsl: SSL 证书
+  domainRules: 规则管理
+tag:
+  title: 词条名称
+  description: 描述
+  color: 颜色
+  createdAt: 创建时间
+  updatedAt: 更新时间
+  status: 状态
+  actions: 操作
+  create: 新增词条
+  edit: 编辑词条
+  delete: 删除词条
+  confirmDelete: 确认删除
+  deleteConfirmMessage: 确定要删除这个词条吗？删除后无法恢复。
+  searchPlaceholder: 搜索词条名称或描述...
+  noData: 暂无词条数据
+  createSuccess: 词条创建成功
+  updateSuccess: 词条更新成功
+  deleteSuccess: 词条删除成功
+  createError: 词条创建失败
+  updateError: 词条更新失败
+  deleteError: 词条删除失败
+  loadError: 加载词条列表失败
+  titleRequired: 请输入词条名称
+  descriptionPlaceholder: 请输入词条描述
+  colorPlaceholder: 选择词条颜色
+  articleCount: 关联文章
+  categoryCount: 关联分类
+  save: 保存
+  cancel: 取消
+  loading: 加载中...
+article:
+  title: 标题
+  content: 内容
+  contentPreview: 内容预览
+  tags: 标签
+  entries: 词条
+  noEntries: 无词条
+  createdAt: 创建时间
+  updatedAt: 更新时间
+  status: 状态
+  actions: 操作
+  create: 新建文章
+  edit: 编辑文章
+  delete: 删除文章
+  view: 查看
+  confirmDelete: 确认删除
+  deleteConfirmMessage: 确定要删除这篇文章吗？删除后无法恢复。
+  searchPlaceholder: 搜索文章标题或内容...
+  noData: 暂无文章数据
+  createSuccess: 文章创建成功
+  updateSuccess: 文章更新成功
+  deleteSuccess: 文章删除成功
+  createError: 文章创建失败
+  updateError: 文章更新失败
+  deleteError: 文章删除失败
+  loadError: 加载文章列表失败
+  titleRequired: 请输入文章标题
+  contentRequired: 请输入文章内容
+  tagsPlaceholder: 请输入标签，多个标签用逗号分隔
+  save: 保存
+  cancel: 取消
+  loading: 加载中...
+  pageDescription: 管理您的文章内容，支持查看、删除和搜索功能
+  batchDelete: 批量删除
+  refresh: 查询
+  articleDetail: 文章详情
+  createTime: 创建时间
+  updateTime: 更新时间
+  close: 关闭
+  selectArticlesToDelete: 请选择要删除的文章
+  confirmBatchDelete: 确认批量删除
+  confirmBatchDeleteMessage: "确定要删除选中的 {count} 篇文章吗？删除后无法恢复。"
+  batchDeleteSuccess: "成功删除 {count} 篇文章"
+  batchDeleteError: 批量删除失败
+domain:
+  pageDescription: 管理您的域名和DNS记录，类似阿里云域名管理体验
+  addDomain: 添加域名
+  domainName: 域名名称
+  domainNamePlaceholder: 请输入域名，如：example.com
+  searchDomainPlaceholder: 搜索域名...
+  refresh: 刷新
+  noDomains: 暂无域名
+  active: 已激活
+  pending: 待激活
+  dnsRecords: DNS记录数
+  lastUpdate: 最后更新
+  manageDns: 管理DNS
+  settings: 设置
+  delete: 删除
+  confirmDelete: "确认删除域名 {name}？"
+  deleteTitle: 删除域名
+  deleteSuccess: "域名 {name} 删除成功"
+  deleteError: 删除域名失败
+  addSuccess: 域名添加成功
+  addError: 域名添加失败
+  loadError: 加载域名失败
+  nameRequired: 请输入域名名称
+  nameInvalid: 请输入有效的域名格式
+  settingsFeature: 域名设置功能开发中
+  backToDomainList: 返回域名列表
+dns:
+  pageDescription: 管理DNS记录，支持查看、编辑、删除和批量操作
+  name: 记录名称
+  type: 记录类型
+  value: 记录值
+  content: 内容
+  ttl: TTL
+  proxy: 代理
+  actions: 操作
+  addRecord: 添加记录
+  editRecord: 编辑记录
+  delete: 删除
+  refresh: 刷新
+  noRecords: 暂无DNS记录
+  loadError: 加载DNS记录失败
+  deleteError: 删除DNS记录失败
+  deleteSuccess: "记录 {name} 删除成功"
+  updateSuccess: DNS记录更新成功
+  createSuccess: DNS记录创建成功
+  saveError: 保存DNS记录失败
+  confirmDeleteRecord: "确认删除记录 {name}？"
+  confirmDelete: 确认删除
+  selectRecordsFirst: 请先选择记录
+  batchDelete: 批量删除
+  batchEnable: 批量启用代理
+  batchDisable: 批量禁用代理
+  batchDeleteSuccess: "成功删除 {count} 条记录"
+  batchEnableSuccess: "成功启用 {count} 条记录的代理"
+  batchDisableSuccess: "成功禁用 {count} 条记录的代理"
+  confirmBatchDelete: "确认批量删除 {count} 条记录？"
+  filterByType: 按类型筛选
+  searchRecordPlaceholder: 搜索记录名称或值...
+  proxyUpdateSuccess: 代理状态更新成功
+  proxyUpdateError: 代理状态更新失败
+  selectType: 请选择记录类型
+  namePlaceholder: 子域名（留空为根域名）
+  selectTtl: 请选择TTL
+  typeRequired: 请选择记录类型
+  nameRequired: 请输入记录名称
+  contentRequired: 请输入记录值
+  ttlRequired: 请选择TTL
+  placeholderIPv4: "请输入IPv4地址，如：192.168.1.1"
+  placeholderIPv6: "请输入IPv6地址，如：2001:db8::1"
+  placeholderCNAME: "请输入目标域名，如：example.com"
+  placeholderMX: "请输入邮件服务器，如：10 mail.example.com"
+  placeholderTXT: "请输入文本内容"
+  placeholderNS: "请输入名称服务器，如：ns1.example.com"
+  placeholderSRV: "请输入SRV记录，如：10 5 443 target.example.com"
+  placeholderCAA: "请输入CAA记录，如：0 issue letsencrypt.org"
+  placeholderDefault: 请输入记录值
+ssl:
+  pageDescription: 管理您的SSL证书，支持查看、更新和配置
+  comingSoon: 功能开发中，敬请期待
+rules:
+  pageDescription: 管理您的域名规则，支持配置和管理
+  comingSoon: 功能开发中，敬请期待
+apiKeys:
+  currentActiveConfig: 当前激活配置
+  testConnection: 测试连接
+  refresh: 刷新
+  noConfig: 暂无配置
+  activated: 已激活
+  edit: 编辑
+  deactivate: 停用
+  temperature: 温度
+  maxTokens: 最大tokens
+  configManagement: 配置管理
+  searchConfigPlaceholder: 搜索配置名称或提供商
+  createConfig: 新建配置
+  notActivated: 未激活
+  activate: 激活
+  delete: 删除
+  editConfig: 编辑配置
+  provider: 提供商
+  selectProvider: 请选择提供商
+  model: 模型
+  loadingModels: 正在加载模型...
+  selectModel: 请选择模型
+  selectProviderFirst: 请先选择提供商
+  loadingModelList: 正在加载模型列表...
+  noAvailableModels: 该提供商暂无可用模型
+  apiKey: API Key
+  enterApiKey: 请输入API Key
+  baseUrl: Base URL
+  enterBaseUrl: 请输入Base URL
+  cancel: 取消
+  testApiKey: 测试API Key
+  update: 更新
+  create: 创建
+  createAndActivate: 创建并激活
+  selectProviderRequired: 请选择提供商
+  selectModelRequired: 请选择模型
+  enterApiKeyRequired: 请输入API Key
+  setTemperatureRequired: 请设置温度
+  setMaxTokensRequired: 请设置最大tokens
+  enterBaseUrlRequired: 请输入Base URL
+  loadConfigListError: 加载配置列表失败
+  loadProviderListError: 加载提供商列表失败
+  loadModelListError: 加载模型列表失败
+  configUpdateSuccess: 配置更新成功
+  configCreateSuccess: 配置创建成功
+  configUpdateError: 配置更新失败
+  configCreateError: 配置创建失败
+  configCreateAndActivateSuccess: 配置创建并激活成功
+  configNotFound: 未找到要激活的配置
+  configActivateSuccess: 配置激活成功
+  configActivateError: 配置激活失败
+  confirmDeactivate: 确认停用
+  confirmDeactivateMessage: 确定要停用当前配置吗？
+  configDeactivated: 配置已停用
+  configDeactivateError: 停用配置失败
+  cannotDeleteActiveConfig: 已激活的配置不能删除，请先停用该配置
+  confirmDelete: 确认删除
+  confirmDeleteMessage: 确定要删除此配置吗？
+  configDeleteSuccess: 配置删除成功
+  configDeleteError: 配置删除失败
+  activateConfigFirst: 请先激活一个完整的配置
+  aiConnectionTestFailed: AI连接测试失败，请检查配置
+  fillApiKeyFirst: 请先填写API Key、提供商和模型
+  apiKeyTestFailed: API Key测试失败，请检查配置
+generator:
+  pageDescription: 智能文章生成器，支持URL提取、词条生成和内链插入
+  urlAndEntity: URL提取和词条生成
+  urlLabel: URL（提取并保存）
+  urlPlaceholder: 请输入要提取内容的URL
+  extractAndSave: 🔍 提取并保存
+  entityNameLabel: 词条名称（生成并保存）
+  entityNamePlaceholder: 请输入词条名称
+  generateAndSave: 📝 生成并保存
+  oneClickProcess: 🚀 一键真实
+  loopSettings: 循环生成设置
+  maxArticles: 最大文章数
+  maxEntities: 最大词条数
+  threshold: 阈值
+  startLoop: 🔄 开始循环
+  pauseLoop: ⏸️ 暂停
+  stopLoop: ⏹️ 停止
+  extractedEntities: 抽取的词条
+  items: 项
+  preview: 预览
+  remove: 删除
+  noEntities: 暂无抽取的词条
+  previewTitle: 预览（已内链）
+  showHtml: 显示HTML
+  hideHtml: 隐藏HTML
+  sourceHtml: 源内容 HTML（展开/收起）
+  noPreview: 暂无预览内容
+  urlExtracted: URL提取成功
+  urlExtractError: URL提取失败
+  entityGenerated: 词条生成成功
+  entityGenerateError: 词条生成失败
+  fullProcessCompleted: 完整流程执行成功
+  fullProcessError: 完整流程执行失败
+  loopStarted: 循环生成已开始
+  loopPaused: 循环生成已暂停
+  loopStopped: 循环生成已停止
+  entityRemoved: 词条已删除
+  entityIdLabel: 词条ID（生成并保存）
+  entityIdPlaceholder: 请输入词条ID
+  generateByIdAndSave: 🔑 生成并保存
+  controls: 控制按钮
+  batchProgress: 批量生成进度
+  extractingUrlContent: 正在提取URL内容...
+  extractingEntities: 正在提取实体...
+  generatingArticles: 正在基于实体生成文章...
+  urlContentProcessed: URL内容处理完成
+  urlContentProcessFailed: URL内容处理失败
+  entitiesExtracted: "成功提取 {count} 个实体"
+  articleGenerated: "文章 \"{title}\" 生成并保存成功"
+  entityArticleFailed: "实体 \"{name}\" 的文章生成失败"
+  urlContentExtracted: "成功提取内容: {title}"
+  noEntitiesCreateTitle: 未提取到实体，已创建基于标题的实体
+  sourceLabel: 来源
+  entitiesCleared: 已清空之前的词条
+status:
+  pureLoad: 加载中...
+  pureMessage: 消息
+  pureNotify: 通知
+  pureTodo: 待办
+  pureNoMessage: 暂无消息
+  pureNoNotify: 暂无通知
+  pureNoTodo: 暂无待办
+login:
+  pureUsername: 账号
+  purePassword: 密码
+  pureLogin: 登录
+  pureLoginSuccess: 登录成功
+  pureLoginFail: 登录失败
+  pureUsernameReg: 请输入账号
+  purePassWordReg: 请输入密码
+  purePassWordRuleReg: 密码格式应为8-18位数字、字母、符号的任意两种组合
+seoPush:
+  pageDescription: 管理SEO推送设置，包括连接配置、IndexNow密钥管理和实时监控
+  connectionSettings: 连接设置
+  advancedFeatures: 高级功能
+  realtimeLog: 实时日志
+  account: 账号
+  accountName: 账号名称
+  accountNamePlaceholder: 输入账号名称
+  bingApiKey: Bing API Key
+  bingApiKeyPlaceholder: 输入Bing API Key
+  cloudflareToken: Cloudflare Token
+  cloudflareTokenPlaceholder: 输入Cloudflare Token
+  accountId: Account ID
+  accountIdPlaceholder: 输入Cloudflare Account ID
+  missingBingApiKey: 缺少Bing API Key
+  retry: 重试
+  delete: 删除
+  sitemapPath: Sitemap路径
+  sitemapPathPlaceholder: /sitemap.xml
+  sitemapPathHelp: 网站地图文件路径,默认为/sitemap.xml
+  addNewAccount: 添加新账号
+  indexNowKeyManagement: IndexNow 密钥管理
+  indexNowKeys: IndexNow 密钥(一行一个)
+  indexNowKeysPlaceholder: 输入IndexNow密钥,每行一个
+  generateNewKey: 生成新密钥
+  detectKeys: 检测密钥
+  pathModeSettings: 路径/模式设置
+  pathModes: 路径/模式(逗号或换行分隔,自动去重)
+  pathModesPlaceholder: 可填/path 或关键字,如poker、casino;用逗号或换行分隔
+  addCommonDirectories: 添加常用目录
+  clearDirectories: 清空目录
+  pathModesHelp: 可填/path 或关键字,如poker、casino;用逗号或换行分隔
+  maxGeneration: 最大生成数量
+  maxGenerationHelp: 最大不超过1000个链接
+  batchGenerateIndexNow: 批量生成推送IndexNow
+  checkSystemStatus: 检查系统状态
+  systemControl: 系统控制
+  indexNowInterval: IndexNow 间隔(分钟)
+  startIndexNowTimer: 启动定时(IndexNow)
+  stopIndexNowTimer: 停止定时(IndexNow)
+  startTimer: 启动定时
+  forceStop: 强制停止
+  emergencyCleanup: 紧急清理
+  clearLogs: 清理日志
+  hide: 隐藏
+  clear: 清空
+  noLogs: 暂无日志
+  accountNameHelp: 账号名称将展示在标题上
+  bingApiKeyHelp: Bing → 设置 → API管理
+  cloudflareTokenHelp: Cloudflare → 个人资料 → API令牌
+  accountIdHelp: Cloudflare → Workers & Pages → 右侧帐户ID
+  confirmDeleteAccount: 确定要删除这个账号吗？
+  confirmDelete: 确认删除
+  atLeastOneAccount: 至少需要保留一个账号
+  accountDeleted: 账号已删除
+  newKeyGenerated: 新密钥已生成
+  keysDetected: 个密钥
+  commonDirectoriesAdded: 已添加常用目录
+  directoriesCleared: 目录已清空
+  batchGenerationStarted: 开始批量生成推送IndexNow，最大数量
+  batchGenerationCompleted: 批量生成完成，共生成
+  linksGenerated: 个链接
+  systemStatusChecked: 检查系统状态...
+  systemStatusNormal: 系统状态正常
+  indexNowTimerStarted: IndexNow定时任务已启动，间隔
+  minutes: 分钟
+  indexNowTimerStopped: IndexNow定时任务已停止
+  timerStarted: 定时任务已启动
+  forceStopAllTasks: 强制停止所有任务
+  emergencyCleanupStarted: 执行紧急清理...
+  emergencyCleanupCompleted: 紧急清理完成
+  testingAccount: 开始测试账号
+  step1TestingBing: 步骤1:测试Bing连接...
+  accountMissingBingApiKey: 缺少Bing API Key
+  accountVerificationFailed: 验证完成-部分连接测试失败
+  accountConnectionTestSuccess: 连接测试成功

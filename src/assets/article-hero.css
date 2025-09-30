@@ -1,0 +1,343 @@
+/* 文章头部区域样式 */
+
+/* 文章英雄区域 */
+.article-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.2rem 0 0.8rem 0;
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.article-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-container {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 1.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* 英雄内容区域 */
+.hero-content {
+  color: #fff;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.2;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #fff, #f0f8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 0.875rem;
+  margin: 0 0 0.3rem 0;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* 紧凑型元信息布局 */
+.hero-meta-compact {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.meta-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.meta-inline-icon {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.meta-inline-text {
+  font-weight: 400;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+}
+
+.meta-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.meta-icon {
+  font-size: 0.75rem;
+}
+
+.meta-text {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 英雄视觉区域 */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.8rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-timeline-preview {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.timeline-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.timeline-dot.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+.timeline-dot:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.4rem;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 面包屑导航 */
+.breadcrumb-nav {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 0.4rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.breadcrumb-container {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #6c757d;
+  text-decoration: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  font-size: 0.75rem;
+}
+
+.breadcrumb-link:hover {
+  color: #667eea;
+  background: #f8f9fa;
+  text-decoration: none;
+}
+
+.breadcrumb-item.current .breadcrumb-link {
+  color: #667eea;
+  background: #e9f5ff;
+  font-weight: 500;
+  cursor: default;
+}
+
+.breadcrumb-icon {
+  font-size: 0.75rem;
+}
+
+.breadcrumb-text {
+  font-weight: 500;
+}
+
+.breadcrumb-separator {
+  color: #dee2e6;
+  font-weight: 300;
+  margin: 0 0.25rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .hero-visual {
+    order: -1;
+  }
+  
+  .hero-meta {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .article-hero {
+    padding: 1rem 0 0.6rem 0;
+  }
+  
+  .hero-container {
+    padding: 0 1rem;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .hero-meta {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  
+  .meta-item {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .breadcrumb-container {
+    padding: 0 1rem;
+  }
+  
+  .breadcrumb-list {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
+  .breadcrumb-text {
+    display: none;
+  }
+  
+  .breadcrumb-icon {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-hero {
+    padding: 0.8rem 0 0.6rem 0;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .meta-item {
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .meta-text {
+    font-size: 0.75rem;
+  }
+}

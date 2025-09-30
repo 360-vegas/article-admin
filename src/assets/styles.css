@@ -1,0 +1,1231 @@
+/* 基础样式 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background: #f8f9fa;
+  overflow-x: hidden;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* 头部 */
+header {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  margin: 0;
+  color: #667eea;
+  font-size: 2rem;
+}
+
+/* 文章头部样式 */
+.article-header {
+    max-width: 1450px;
+    margin: 0 auto 0.5rem auto;
+    padding: 0 1rem;
+}
+.article-title {
+    margin: 0.5rem 0 0.25rem 0;
+    font-size: 2rem;
+    line-height: 1.25;
+    color: #212529;
+}
+.article-subtitle {
+    margin: 0 0 0.5rem 0;
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+/* 面包屑样式 */
+.breadcrumb {
+    max-width: 1450px;
+    margin: 0 auto 1rem auto;
+    padding: 0 1rem;
+}
+.breadcrumb ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.breadcrumb li {
+    display: inline;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+.breadcrumb li+li:before {
+    content: " › ";
+    color: #adb5bd;
+}
+.breadcrumb a {
+    color: #6c757d;
+    text-decoration: none;
+}
+.breadcrumb a:hover {
+    color: #495057;
+    text-decoration: none;
+}
+
+/* 面包屑兼容旧结构（非 li 结构）*/
+.breadcrumb a,
+.breadcrumb span {
+    color: #6c757d;
+    text-decoration: none;
+}
+.breadcrumb a:hover {
+    color: #495057;
+}
+/* 分隔符：a 或 span 的相邻元素前插入 */
+.breadcrumb a + a::before,
+.breadcrumb a + span::before,
+.breadcrumb span + a::before,
+.breadcrumb span + span::before {
+    content: " \203A "; /* › */
+    color: #adb5bd;
+    margin: 0 0.25rem;
+}
+
+/* 主内容区 */
+.page-content {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.content-main {
+  flex: 1;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+.content-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+/* 侧边栏组件 */
+.toc, .infobox {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+.toc h2, .infobox h3 {
+  margin-top: 0;
+  color: #495057;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  padding: 0.25rem 0;
+}
+
+.toc a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+/* 旧的层级样式已移除，使用新的层级样式 */
+
+/* InfoBox 表格 */
+.infobox table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.infobox th, .infobox td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.infobox th {
+  background: #f8f9fa;
+  font-weight: 600;
+  width: 30%;
+}
+
+/* 相关词条 */
+.related-pages {
+  background: #fff;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.related-card {
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.related-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.related-card h4 {
+  margin: 0 0 0.5rem 0;
+}
+
+.related-card h4 a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.related-card h4 a:hover {
+  text-decoration: none;
+}
+
+.related-card p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 13px;
+}
+
+/* 首页样式 */
+.home-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-size: 14px;
+}
+
+.stats, .recent-pages {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.stats h2, .recent-pages h2 {
+  margin-top: 0;
+  color: #495057;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.recent-pages ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-pages li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recent-pages li:last-child {
+  border-bottom: none;
+}
+
+.recent-pages a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.recent-pages a:hover {
+  text-decoration: underline;
+}
+
+.recent-pages .date {
+  color: #6c757d;
+  font-size: 13px;
+}
+
+/* 页脚 */
+footer {
+  background: #fff;
+  border-top: 1px solid #e9ecef;
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+  margin-top: 3rem;
+}
+
+/* 页脚组件样式 */
+.main-footer {
+  background: #fff;
+  border-top: 1px solid #e9ecef;
+  margin-top: 0.5rem;
+}
+
+.footer-container {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1.2rem 0 1rem 0;
+}
+
+.footer-section h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.footer-section p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #005a87;
+}
+
+.footer-bottom {
+  border-top: 1px solid #e9ecef;
+  padding: 0.8rem 0;
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+.footer-bottom p {
+  margin: 0.25rem 0;
+}
+
+/* 响应式页脚 */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 0 1.5rem 0;
+  }
+  
+  .footer-section {
+    text-align: center;
+  }
+  
+  .footer-section h3 {
+    font-size: 1rem;
+  }
+}
+
+/* 实体链接样式 */
+.entity-link {
+  color: #667eea;
+  text-decoration: none;
+  border-bottom: 0 !important;
+}
+
+.entity-link:hover {
+  text-decoration: none;
+}
+
+/* 知识图谱链接样式 */
+.entity-link {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 0 !important;
+    transition: color 0.3s ease;
+}
+
+.entity-link:hover {
+    color: #005a87;
+}
+
+.entity-link[data-entity] {
+    position: relative;
+}
+
+.entity-link[data-entity]:hover::after {
+    content: attr(data-entity);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+.entity-link[data-entity]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #333;
+    margin-bottom: -5px;
+}
+
+/* 引用链接样式 */
+.citation-link {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+.citation-link:hover {
+    color: #c82333;
+    text-decoration: underline;
+}
+
+/* 参考文献样式 - 仅应用于侧边栏 */
+.wiki-sidebar-right .citations {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.wiki-sidebar-right .citations h2 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.wiki-sidebar-right .citations ol {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.wiki-sidebar-right .citations li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+    color: #495057;
+}
+
+.wiki-sidebar-right .citations em {
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* 知识图谱可视化样式 */
+.knowledge-graph {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.knowledge-graph h3 {
+    color: #667eea;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+.graph-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.graph-visualization {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.graph-node {
+    padding: 0.8rem 1.2rem;
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 20px;
+    font-weight: 500;
+    color: #495057;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.graph-node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.graph-node.main-node {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-color: #667eea;
+    font-size: 1.1rem;
+    padding: 1rem 1.5rem;
+}
+
+.graph-connections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.graph-legend {
+    flex: 1;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.graph-legend h4 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.graph-legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.graph-legend li {
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.legend-item.main {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.legend-item.related {
+    background: #28a745;
+}
+
+.legend-item.technology {
+    background: #ffc107;
+}
+
+.legend-item.person {
+    background: #dc3545;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .page-content {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .content-sidebar {
+    width: 100%;
+  }
+  
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  header, .breadcrumb {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .content-main {
+    padding: 1rem;
+  }
+
+    .graph-container {
+        flex-direction: column;
+    }
+    
+    .graph-connections {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    
+    .wiki-sidebar-right .citations {
+        padding: 1rem;
+    }
+    
+    .knowledge-graph {
+        padding: 1rem;
+    }
+}
+
+/* 三栏布局样式 */
+.wiki-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    gap: 0.5rem;
+    max-width: 1450px;
+    margin: 0 auto;
+}
+
+/* 左侧目录 */
+.wiki-sidebar-left {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.wiki-sidebar-left .toc {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+.wiki-sidebar-left .toc h2 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+}
+
+.wiki-sidebar-left .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wiki-sidebar-left .toc li {
+    margin-bottom: 0.5rem;
+}
+
+.wiki-sidebar-left .toc a {
+    color: #495057;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: block;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.wiki-sidebar-left .toc a:hover {
+    background: #f8f9fa;
+    color: #667eea;
+    padding-left: 0.8rem;
+}
+
+/* 目录层级样式 - 使用后代选择器 */
+.wiki-sidebar-left .toc .toc-level-1 a {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 1rem;
+    padding-left: 0;
+}
+
+.wiki-sidebar-left .toc .toc-level-2 a {
+    font-weight: 500;
+    color: #667eea;
+    font-size: 0.95rem;
+    padding-left: 0.5rem;
+}
+
+.wiki-sidebar-left .toc .toc-level-3 a {
+    font-size: 0.9rem;
+    padding-left: 1rem;
+    color: #667eea;
+    font-weight: 400;
+}
+
+.wiki-sidebar-left .toc .toc-level-4 a {
+    font-size: 0.85rem;
+    padding-left: 1.5rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+
+.wiki-sidebar-left .toc .toc-level-5 a {
+    font-size: 0.8rem;
+    padding-left: 2rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+
+.wiki-sidebar-left .toc .toc-level-6 a {
+    font-size: 0.75rem;
+    padding-left: 2.5rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+
+/* 目录高亮样式 */
+.wiki-sidebar-left .toc .toc-link.active {
+    background: #667eea;
+    color: white;
+    font-weight: 500;
+}
+
+.wiki-sidebar-left .toc .toc-link.active:hover {
+    background: #5a6fd8;
+    color: white;
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 中间内容 */
+.wiki-content {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 14px;
+}
+
+.wiki-content h2 {
+    color: #667eea;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+    position: relative;
+}
+
+.wiki-content h2::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+.wiki-content h2:first-of-type {
+    margin-top: 0;
+}
+
+.wiki-content h3 {
+    color: #495057;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* 侧边栏内容 - 仅应用于侧边栏 */
+.wiki-sidebar-right .wiki-content {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 14px;
+}
+
+.wiki-sidebar-right .wiki-content h2 {
+    color: #667eea;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+    position: relative;
+}
+
+.wiki-sidebar-right .wiki-content h2::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+.wiki-sidebar-right .wiki-content h2:first-of-type {
+    margin-top: 0;
+}
+
+.wiki-sidebar-right .wiki-content h3 {
+    color: #495057;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* 右侧信息框 */
+.wiki-sidebar-right {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.wiki-sidebar-right > div {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 0.5rem;
+}
+
+.wiki-sidebar-right h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 0.5rem;
+}
+
+/* 地图框 */
+.map-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.map-placeholder {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px dashed #dee2e6;
+}
+
+.map-placeholder p {
+    margin: 0.5rem 0;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+/* 迷你时间线 */
+.timeline-mini {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.timeline-item-mini {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.timeline-date-mini {
+    background: #667eea;
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.timeline-content-mini {
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .wiki-layout {
+        grid-template-columns: 220px 1fr 280px;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .wiki-layout {
+        grid-template-columns: 200px 1fr;
+        gap: 1.5rem;
+    }
+    
+    .wiki-sidebar-right {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .wiki-sidebar-right > div {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .wiki-layout {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .wiki-sidebar-left {
+        position: static;
+        order: 2;
+        margin-top: 1rem;
+    }
+    
+    .wiki-content {
+        order: 1;
+        padding: 1rem;
+    }
+    
+    .wiki-sidebar-right {
+        order: 3;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .wiki-sidebar-left .toc {
+        padding: 1rem;
+    }
+    
+    .wiki-sidebar-left .toc h2 {
+        font-size: 1.2rem;
+    }
+    
+    .wiki-sidebar-left .toc .toc-level-3 > a {
+        padding-left: 1rem;
+    }
+}
+
+/* 参考文献样式微调 - 仅应用于侧边栏 */
+.wiki-sidebar-right .citations {
+    font-size: 0.92rem;
+}
+.wiki-sidebar-right .citations ol {
+    padding-left: 1.25rem;
+}
+.wiki-sidebar-right .citations li {
+    line-height: 1.7;
+}
+.wiki-sidebar-right .citations .kg-link {
+    margin-left: 8px;
+    font-size: 0.85em;
+    color: #7b1fa2;
+    text-decoration: none;
+}
+.wiki-sidebar-right .citations .kg-link:hover {
+    text-decoration: underline;
+}
+.wiki-sidebar-right .citations-graph-entry {
+    margin: 0.25rem 0 0.75rem 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* 信息框字体优化 */
+.infobox {
+    font-size: 0.92rem;
+}
+.infobox table {
+    font-size: 0.92rem;
+}
+.infobox th, .infobox td {
+    padding: 0.4rem 0.5rem;
+}
+
+/* 相关实体与外部链接样式调整（去除下划线和蓝色）*/
+.related-entities a, .external-links a {
+    color: #212529;
+    text-decoration: none;
+}
+.related-entities a:hover, .external-links a:hover {
+    color: #111;
+    text-decoration: none;
+}
+
+/* 头部组件样式 */
+.main-header {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+}
+
+.header-top {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  margin: 0;
+  padding: 0;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.header-brand .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+}
+
+.main-nav .nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #667eea;
+}
+
+.header-lang {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-link {
+  text-decoration: none;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.lang-link.active {
+  color: #667eea;
+  font-weight: bold;
+}
+
+.lang-separator {
+  color: #ccc;
+}
+
+.header-search-area {
+  background: linear-gradient(135deg, #0d47a1 0%, #512da8 100%);
+  box-shadow: 0 10px 30px rgba(13,71,161,0.25);
+  position: relative;
+  overflow: hidden;
+  padding: 4.5rem 0 3.75rem 0;
+  width: 100%;
+  margin: 0;
+}
+
+.header-search-area::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(800px 400px at 10% 10%, rgba(255,255,255,0.10), transparent 60%),
+              radial-gradient(600px 300px at 90% 20%, rgba(255,255,255,0.08), transparent 60%),
+              radial-gradient(700px 350px at 50% 120%, rgba(255,255,255,0.06), transparent 60%);
+  pointer-events: none;
+}
+
+.search-content {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-title {
+  margin: 0 auto 0.6rem auto;
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  max-width: 1000px;
+  text-align: center;
+}
+
+.header-search-area .search-bar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+  width: 100%;
+}
+
+.header-search-area .search-bar input[type="search"] {
+  width: 100%;
+  max-width: 560px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 6px 20px rgba(0,0,0,0.18);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  text-align: left;
+}
+
+.header-search-area .search-bar input[type="search"]::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+.header-search-area .search-bar button {
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: all .2s ease;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.header-search-area .search-bar button:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.7);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 900px) {
+  .header-container {
+    padding: 0 0.5rem;
+  }
+  
+  .header-search-area {
+    padding: 3.5rem 0 2.75rem 0;
+  }
+  
+  .search-title {
+    font-size: 1.5rem;
+  }
+  
+  .header-search-area .search-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .header-search-area .search-bar input[type="search"] {
+    max-width: 100%;
+  }
+}

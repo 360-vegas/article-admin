@@ -1,0 +1,980 @@
+/* 文章内容区域科技感样式 */
+
+/* 整体布局 */
+.wiki-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 0.5rem;
+  max-width: 1450px;
+  margin: 0 auto;
+}
+
+/* 左侧目录 */
+.wiki-sidebar-left {
+  position: sticky;
+  top: 0.5rem;
+  height: fit-content;
+}
+
+.toc {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16px;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.toc::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.toc h2 {
+  color: #2c3e50;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toc h2::before {
+  content: '📚';
+  font-size: 1.125rem;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  margin-bottom: 0.5rem;
+}
+
+.toc a {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  color: #667eea;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.toc a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  transition: width 0.3s ease;
+}
+
+.toc a:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateX(4px);
+}
+
+.toc a:hover::before {
+  width: 100%;
+}
+
+.toc-level-2 a {
+  font-weight: 600;
+  padding-left: 1rem;
+}
+
+.toc-level-3 a {
+  font-weight: 400;
+  padding-left: 2rem;
+  font-size: 0.8125rem;
+  color: #6c757d;
+}
+
+/* 中间内容区域 */
+.wiki-content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 0.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.article-intro {
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.article-intro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="%23667eea" stroke-width="2" opacity="0.1"/><circle cx="50" cy="50" r="20" fill="none" stroke="%23667eea" stroke-width="1" opacity="0.2"/></svg>');
+  opacity: 0.3;
+}
+
+.article-intro p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+}
+
+.quick-facts {
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.quick-facts h3 {
+  color: #667eea;
+  font-size: 1rem;
+  margin: 0 0 0.8rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quick-facts ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quick-facts li {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  font-size: 0.875rem;
+  color: #495057;
+}
+
+.quick-facts li:last-child {
+  border-bottom: none;
+}
+
+.quick-facts strong {
+  color: #2c3e50;
+}
+
+/* 文章标题样式 */
+.wiki-content h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem 0;
+  padding: 1rem 0;
+  border-bottom: 2px solid #e9ecef;
+  position: relative;
+}
+
+.wiki-content h2::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.wiki-content h3 {
+  color: #34495e;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  padding-left: 1rem;
+}
+
+.wiki-content h4 {
+  color: #495057;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.8rem 0;
+}
+
+/* 段落和列表 */
+.wiki-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.wiki-content ul, .wiki-content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.wiki-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  color: #2c3e50;
+}
+
+/* 链接样式 */
+.entity-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.entity-link:hover {
+  color: #764ba2;
+  border-bottom-color: #764ba2;
+  text-decoration: none;
+}
+
+/* 引用链接 */
+.citation-link {
+  color: #e74c3c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.citation-link:hover {
+  color: #c0392b;
+}
+
+/* 图片样式 */
+.image-gallery {
+  margin: 2rem 0;
+}
+
+.article-image {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 0.5rem;
+  text-align: center;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  margin-inline-start: 10px;
+    margin-inline-end: 10px;
+}
+
+.article-image:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.article-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.article-image figcaption {
+  margin-top: 0.8rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* 系统展示卡片 */
+.system-showcase {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.system-card {
+  border-radius: 12px;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.system-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.system-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+}
+
+.system-card p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.system-card .year {
+  color: #667eea;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.system-card .field {
+  color: #764ba2;
+  font-weight: 500;
+  background: rgba(118, 75, 162, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+/* 未来展望部分样式 */
+.wiki-content .future-outlook-section {
+  margin: 40px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wiki-content .future-outlook-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.wiki-content .future-outlook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.wiki-content .future-outlook-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.wiki-content .future-outlook-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+.wiki-content .future-outlook-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.wiki-content .future-outlook-card .entity-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.wiki-content .future-outlook-card .entity-link:hover {
+  color: #5a6fd8;
+  text-decoration: none;
+}
+
+.wiki-content .future-outlook-card {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 60px;
+}
+
+.wiki-content .future-outlook-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+.wiki-content .future-outlook-icon {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.wiki-content .future-outlook-card a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.wiki-content .future-outlook-card a:hover {
+  color: #764ba2;
+}
+
+/* 挑战与思考部分样式 */
+.wiki-content .challenges-section {
+  margin: 40px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wiki-content .challenges-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.wiki-content .challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.wiki-content .challenge-card {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.wiki-content .challenge-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.wiki-content .challenge-card h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.125rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.wiki-content .challenge-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.wiki-content .challenge-card li {
+  margin-bottom: 8px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.wiki-content .challenge-card {
+  background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #fecaca;
+  transition: all 0.3s ease;
+  min-height: 120px;
+}
+
+.wiki-content .challenge-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.1);
+}
+
+.wiki-content .challenge-card h4 {
+  color: #dc2626;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wiki-content .challenge-card ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.wiki-content .challenge-card li {
+  color: #7f1d1d;
+  margin-bottom: 0.4rem;
+}
+
+/* 参考文献部分样式 */
+.wiki-content .references-section {
+  margin: 40px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wiki-content .references-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.wiki-content .references-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wiki-content .references-box ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.wiki-content .references-box li {
+  margin-bottom: 12px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.wiki-content .references-box li a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.wiki-content .references-box li a:hover {
+  color: #5a6fd8;
+  text-decoration: underline;
+}
+
+.wiki-content .references-box h2 {
+  border-bottom: none;
+  margin-top: 0;
+}
+
+.wiki-content .references-box h2::before {
+  display: none;
+}
+
+.wiki-content .references-box ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.wiki-content .references-box li {
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+/* 右侧侧边栏 */
+.wiki-sidebar-right {
+  position: sticky;
+  top: 0.5rem;
+  height: fit-content;
+}
+
+.infobox, .related-entities, .external-links, .stats-box, .map-box, .timeline-mini {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 16px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.infobox::before, .related-entities::before, .external-links::before, .stats-box::before, .map-box::before, .timeline-mini::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.infobox h3, .related-entities h3, .external-links h3, .stats-box h3, .map-box h3, .timeline-mini h3 {
+  color: #2c3e50;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 修改信息框表格布局 */
+.infobox table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 强制列宽平均分配 */
+}
+
+.infobox th, .infobox td {
+  padding: 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.infobox th {
+  color: #667eea;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.infobox td {
+  color: #495057;
+  font-size: 0.875rem;
+  word-wrap: break-word; /* 允许长单词换行 */
+  overflow-wrap: anywhere; /* 兼容处理各种场景 */
+  padding: 0.6rem;
+}
+
+.related-entities ul, .external-links ul, .stats-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.related-entities li, .external-links li, .stats-box li {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.related-entities li:last-child, .external-links li:last-child, .stats-box li:last-child {
+  border-bottom: none;
+}
+
+.related-entities a, .external-links a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.related-entities a:hover, .external-links a:hover {
+  color: #764ba2;
+}
+
+.stats-box strong {
+  color: #2c3e50;
+}
+
+.map-placeholder p {
+  margin: 0.3rem 0;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+/* 时间线样式 */
+.wiki-content .timeline-mini {
+  background: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 1.5rem 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.wiki-content .timeline-mini::before {
+  display: none !important;
+}
+
+/* 确保主要内容区域中的相关实体、统计信息等不应用侧边栏样式 */
+.wiki-content .related-entities,
+.wiki-content .stats-box,
+.wiki-content .external-links,
+.wiki-content .map-box {
+  background: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 1.5rem 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.wiki-content .related-entities::before,
+.wiki-content .stats-box::before,
+.wiki-content .external-links::before,
+.wiki-content .map-box::before {
+  display: none !important;
+}
+
+/* 横向时间线容器 */
+.wiki-content .timeline-mini {
+  display: flex;
+  flex-direction: column;
+}
+
+.wiki-content .timeline-mini .timeline-items-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.wiki-content .timeline-item-mini {
+  padding: 0.3rem 0;
+  border-bottom: none;
+  background: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 60px;
+  flex: 0 0 auto;
+  gap: 0.3rem;
+}
+
+.timeline-item-mini:last-child {
+  border-bottom: none;
+}
+
+.timeline-date-mini {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.4rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 2.5rem;
+  text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.timeline-content-mini {
+  color: #495057;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 210px;
+  flex: 1;
+}
+
+/* 相关页面 */
+.related-pages {
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: 16px;
+  padding: 0 2rem;
+  margin: 0.5rem auto;
+  box-shadow: 0 8px 32px rgba(0, 5rem);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  max-width: 1450px;
+}
+
+.related-pages h3 {
+  color: #2c3e50;
+  font-size: 1.125rem;
+  margin: 0.5rem 0 0.5rem 0;
+  text-align: center;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 320px);
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.related-card {
+  border-radius: 12px;
+  padding: 0.5rem;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  width: 320px;
+}
+
+.related-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+}
+
+.related-card h4 {
+  margin: 0 0 0.8rem 0;
+}
+
+.related-card h4 a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.related-card h4 a:hover {
+  color: #764ba2;
+}
+
+.related-card p {
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .wiki-layout {
+    grid-template-columns: 250px 1fr 280px;
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 992px) {
+  .wiki-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .wiki-sidebar-left, .wiki-sidebar-right {
+    position: static;
+    order: 3;
+  }
+  
+  .wiki-content {
+    order: 1;
+  }
+  
+  .toc {
+    margin-bottom: 1rem;
+  }
+}
+
+/* 正文内容统一为13px（不影响标题字号） */
+.wiki-content p,
+.wiki-content li,
+.wiki-content .note,
+.wiki-content .meta,
+.wiki-content .caption {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.6;
+}
+
+/* 卡片与列表内部文本也统一为13px（不改卡片标题/小标题） */
+.wiki-content .future-outlook-card a,
+.wiki-content .challenge-card li,
+.wiki-content .references-box li,
+.wiki-content .timeline-content-mini {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .wiki-layout {
+    padding: 0 1rem;
+  }
+  
+  .wiki-content {
+    padding: 1.5rem;
+  }
+  
+  .article-intro {
+    padding: 1rem;
+  }
+  
+  .wiki-content .future-outlook-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .wiki-content .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .wiki-content .future-outlook-grid,
+  .wiki-content .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .wiki-content .future-outlook-section,
+  .wiki-content .challenges-section,
+  .wiki-content .references-section {
+    margin: 20px 0;
+    padding: 16px;
+  }
+  
+  /* 移动端时间线样式 */
+  .wiki-content .timeline-mini .timeline-items-container {
+    gap: 0.3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .wiki-content .timeline-item-mini {
+    min-width: 50px;
+    gap: 0.2rem;
+  }
+  
+  .timeline-date-mini {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+    min-width: 2rem;
+  }
+  
+  .timeline-content-mini {
+    font-size: 0.7rem;
+    max-width: 60px;
+  }
+  
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .toc, .infobox, .related-entities, .external-links, .stats-box, .map-box, .timeline-mini {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wiki-content {
+    padding: 1rem;
+  }
+  
+  .wiki-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .wiki-content h3 {
+    font-size: 1.125rem;
+  }
+  
+  .article-intro p {
+    font-size: 1rem;
+  }
+  
+  .toc, .infobox, .related-entities, .external-links, .stats-box, .map-box, .timeline-mini {
+    padding: 0.8rem;
+  }
+}

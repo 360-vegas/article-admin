@@ -1,0 +1,94 @@
+import { getPluginsList } from "./build/plugins";
+import { include, exclude } from "./build/optimize";
+import { type UserConfigExport, type ConfigEnv, loadEnv } from "vite";
+import {
+  root,
+  alias,
+  wrapperEnv,
+  pathResolve,
+  __APP_INFO__
+} from "./build/utils";
+
+export default ({ mode }: ConfigEnv): UserConfigExport => {
+  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } =
+    wrapperEnv(loadEnv(mode, root));
+  return {
+    base: VITE_PUBLIC_PATH,
+    root,
+    resolve: {
+      alias
+    },
+    // 服务端渲染
+    server: {
+      // 端口号
+      port: VITE_PORT,
+      host: "0.0.0.0",
+      // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
+      proxy: {
+        "/v1": {
+          target: "http://192.168.0.81:8080/",
+          changeOrigin: true,
+          ws: true, // 支持WebSocket代理
+          configure: (proxy, _options) => {
+            proxy.on('error', (err, _req, _res) => {
+              console.log('proxy error', err);
+            });
+            proxy.on('proxyReq', (proxyReq, req, _res) => {
+              console.log('Sending Request to the Target:', req.method, req.url);
+            });
+            proxy.on('proxyRes', (proxyRes, req, _res) => {
+              console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+            });
+          },
+        },
+        "/openai": {
+          target: "https://api.openai.com",
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/openai/, "")
+        },
+        "/xai": {
+          target: "https://api.x.ai",
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/xai/, "")
+        },
+        '/chat': {
+          target: "https://api.openai.com/v1",
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/xai/, "")
+        }
+      },
+      // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布
+      warmup: {
+        clientFiles: ["./index.html", "./src/{views,components}/*"]
+      }
+    },
+    plugins: getPluginsList(VITE_CDN, VITE_COMPRESSION),
+    // https://cn.vitejs.dev/config/dep-optimization-options.html#dep-optimization-options
+    optimizeDeps: {
+      include,
+      exclude
+    },
+    build: {
+      // https://cn.vitejs.dev/guide/build.html#browser-compatibility
+      target: "es2015",
+      sourcemap: false,
+      // 消除打包大小超过500kb警告
+      chunkSizeWarningLimit: 4000,
+      rollupOptions: {
+        input: {
+          index: pathResolve("./index.html", import.meta.url)
+        },
+        // 静态资源分类打包
+        output: {
+          chunkFileNames: "static/js/[name]-[hash].js",
+          entryFileNames: "static/js/[name]-[hash].js",
+          assetFileNames: "static/[ext]/[name]-[hash].[ext]"
+        }
+      }
+    },
+    define: {
+      __INTLIFY_PROD_DEVTOOLS__: false,
+      __APP_INFO__: JSON.stringify(__APP_INFO__)
+    }
+  };
+};
