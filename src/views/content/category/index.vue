@@ -193,6 +193,7 @@ import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from "elem
 import { Plus, Search, Refresh, Edit, Delete } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import { safeSplitAndFilter } from "@/utils/safeSplit";
 import {
   listCategories,
   createCategory,
@@ -498,10 +499,7 @@ function openBatchChildrenDialog(parentRow?: Category) {
 async function submitBatchChildren() {
   if (!batchParent.value) return;
   const parent = batchParent.value;
-  const names = batchForm.namesRaw
-    .split(/\n|,|，/)
-    .map(s => s.trim())
-    .filter(Boolean);
+  const names = safeSplitAndFilter(batchForm.namesRaw, /\n|,|，/);
   if (names.length === 0) {
     ElMessage.warning("请填写至少一个子分类名称");
     return;

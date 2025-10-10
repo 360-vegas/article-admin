@@ -229,7 +229,7 @@
                   </el-icon>
                   <span>{{ $t("generator.extractedEntities") }}</span>
                   <el-tag type="primary" size="large">{{ extractedEntities.length }} {{ $t("generator.items")
-                  }}</el-tag>
+                    }}</el-tag>
                 </div>
               </div>
             </template>

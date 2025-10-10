@@ -169,6 +169,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import * as pushApi from '@/api/push'
+import { safeSplitAndFilter } from '@/utils/safeSplit'
 
 // 国际化
 const { t } = useI18n()
@@ -260,13 +261,13 @@ const generateNewKey = () => {
 }
 
 const detectKeys = () => {
-  const keys = indexNowKeys.value.split('\n').filter(key => key.trim())
+  const keys = safeSplitAndFilter(indexNowKeys.value, '\n')
   addLog(`${t('seoPush.keysDetected')} ${keys.length} ${t('seoPush.keysDetected')}`, 'info')
 }
 
 const addCommonDirectories = () => {
   const commonDirs = ['/blog', '/news', '/products', '/about']
-  const currentModes = pathModes.value.split('\n').filter(mode => mode.trim())
+  const currentModes = safeSplitAndFilter(pathModes.value, '\n')
   const newModes = commonDirs.filter(dir => !currentModes.includes(dir))
   pathModes.value += (pathModes.value ? '\n' : '') + newModes.join('\n')
   addLog(t('seoPush.commonDirectoriesAdded'), 'info')
@@ -382,7 +383,7 @@ const saveAccount = async (index: number) => {
 // 保存IndexNow密钥
 const saveIndexNowKeys = async () => {
   try {
-    const keys = indexNowKeys.value.split('\n').filter(key => key.trim())
+    const keys = safeSplitAndFilter(indexNowKeys.value, '\n')
     await pushApi.saveIndexNowKeys(keys)
     addLog('IndexNow密钥保存成功', 'info')
   } catch (error) {
@@ -393,7 +394,7 @@ const saveIndexNowKeys = async () => {
 // 保存路径模式
 const savePathModes = async () => {
   try {
-    const modes = pathModes.value.split(/[,\n]/).filter(mode => mode.trim())
+    const modes = safeSplitAndFilter(pathModes.value, /[,\n]/)
     await pushApi.savePathModes(modes)
     addLog('路径模式保存成功', 'info')
   } catch (error) {

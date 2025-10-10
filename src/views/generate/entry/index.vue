@@ -129,7 +129,7 @@ function connectWebSocket() {
   if (ws.value && wsConnected.value) return;
   try {
     const host = window.location.hostname;
-    const url = `ws://${host}:8848/v1/generation/entry`;
+    const url = import.meta.env.MODE == 'development' ? `ws://${host}:8848/v1/generation/entry` : `wss://${host}/v1/generation/entry`;
     if (ws.value) ws.value.close();
     ws.value = new WebSocket(url);
     ws.value.onopen = () => { wsConnected.value = true; appendLog('WebSocket 已连接'); };

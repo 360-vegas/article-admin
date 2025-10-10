@@ -3,6 +3,7 @@ import { onMounted, reactive, ref, computed } from "vue";
 import { Plus } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox, FormInstance, FormRules } from "element-plus";
 import { useI18n } from "vue-i18n";
+import { safeSplitAndFilter } from "@/utils/safeSplit";
 import {
   getCloudflareZones,
   getDnsRecords,
@@ -409,10 +410,7 @@ async function submitBatchAssign() {
     return;
   }
   try {
-    const names = batchAssign.namesText
-      .split(",")
-      .map(s => s.trim())
-      .filter(Boolean);
+    const names = safeSplitAndFilter(batchAssign.namesText, ",");
     await batchAssignDomainGroup({ group_id: batchAssign.groupId, ids: selectedZoneIds.value, names });
     ElMessage.success("分配成功");
     showBatchAssign.value = false;

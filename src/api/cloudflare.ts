@@ -298,47 +298,57 @@ export class SSLWebSocketManager {
 
   connect() {
     try {
-      const wsUrl = this.baseUrl.replace('http', 'ws') + '/v1/ssl/lets-encrypt/ws';
+      // 确保WebSocket URL正确处理协议
+      let wsUrl = this.baseUrl.replace('http', 'ws') + '/v1/ssl/lets-encrypt/ws';
+      // 如果是HTTPS环境，确保使用WSS协议
+      if (window.location.protocol === 'https:' && wsUrl.startsWith('ws://')) {
+        wsUrl = wsUrl.replace('ws://', 'wss://');
+      }
       this.ws = new WebSocket(wsUrl);
-
-      this.ws.onopen = () => {
-        console.log('SSL WebSocket connected');
-        this.reconnectAttempts = 0;
-        this.emit('connected');
-      };
-
-      this.ws.onmessage = (event) => {
-        try {
-          const message = JSON.parse(event.data);
-          console.log('WebSocket received message:', message);
-
-          // 处理不同的消息格式
-          if (message.type) {
-            // 标准格式: {type: "ssl_status", data: {...}}
-            this.emit(message.type, message);
-          } else if (message.message) {
-            // 直接格式: {message: "状态查询成功", data: {...}}
-            this.emit('ssl_status', message);
-          }
-        } catch (error) {
-          console.error('Failed to parse WebSocket message:', error);
-        }
-      };
-
-      this.ws.onclose = () => {
-        console.log('SSL WebSocket disconnected');
-        this.emit('disconnected');
-        this.attemptReconnect();
-      };
-
-      this.ws.onerror = (error) => {
-        console.error('SSL WebSocket error:', error);
-        this.emit('error', error);
-      };
+      this.setupWebSocketHandlers();
     } catch (error) {
       console.error('Failed to connect SSL WebSocket:', error);
       this.emit('error', error);
     }
+  }
+
+  private setupWebSocketHandlers() {
+    if (!this.ws) return;
+
+    this.ws.onopen = () => {
+      console.log('SSL WebSocket connected');
+      this.reconnectAttempts = 0;
+      this.emit('connected');
+    };
+
+    this.ws.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        console.log('WebSocket received message:', message);
+
+        // 处理不同的消息格式
+        if (message.type) {
+          // 标准格式: {type: "ssl_status", data: {...}}
+          this.emit(message.type, message);
+        } else if (message.message) {
+          // 直接格式: {message: "状态查询成功", data: {...}}
+          this.emit('ssl_status', message);
+        }
+      } catch (error) {
+        console.error('Failed to parse WebSocket message:', error);
+      }
+    };
+
+    this.ws.onclose = () => {
+      console.log('SSL WebSocket disconnected');
+      this.emit('disconnected');
+      this.attemptReconnect();
+    };
+
+    this.ws.onerror = (error) => {
+      console.error('SSL WebSocket error:', error);
+      this.emit('error', error);
+    };
   }
 
   disconnect() {

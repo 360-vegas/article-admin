@@ -5,27 +5,25 @@
         <div class="card-header">
           <span>AI 服务提供商状态</span>
           <el-button type="primary" @click="loadProviders" :loading="loading">
-            <el-icon><Refresh /></el-icon>
+            <el-icon>
+              <Refresh />
+            </el-icon>
             刷新
           </el-button>
         </div>
       </template>
-      
+
       <div v-if="loading" class="loading-container">
         <el-skeleton :rows="3" animated />
       </div>
-      
+
       <div v-else-if="providers.length === 0" class="empty-container">
         <el-empty description="暂无提供商数据" />
       </div>
-      
+
       <div v-else class="providers-grid">
-        <el-card 
-          v-for="provider in providers" 
-          :key="provider.id"
-          class="provider-card"
-          :class="{ 'inactive': provider.status !== 'active' }"
-        >
+        <el-card v-for="provider in providers" :key="provider.id" class="provider-card"
+          :class="{ 'inactive': provider.status !== 'active' }">
           <template #header>
             <div class="provider-header">
               <div class="provider-info">
@@ -39,7 +37,7 @@
               </div>
             </div>
           </template>
-          
+
           <div class="provider-details">
             <div class="detail-row">
               <span class="label">成本 (每token):</span>
@@ -56,12 +54,9 @@
             <div class="detail-row">
               <span class="label">成功率:</span>
               <span class="value">
-                <el-progress 
-                  :percentage="Math.round(provider.success_rate * 100)" 
-                  :color="getSuccessRateColor(provider.success_rate)"
-                  :show-text="false"
-                  style="width: 60px; display: inline-block; margin-right: 8px;"
-                />
+                <el-progress :percentage="Math.round(provider.success_rate * 100)"
+                  :color="getSuccessRateColor(provider.success_rate)" :show-text="false"
+                  style="width: 60px; display: inline-block; margin-right: 8px;" />
                 {{ Math.round(provider.success_rate * 100) }}%
               </span>
             </div>
@@ -76,7 +71,7 @@
 import { onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Refresh } from "@element-plus/icons-vue";
-import { getAiProviders, type AiProviderInfo } from "@/api/ai";
+import { getProviders, type AiProviderInfo } from "@/api/ai";
 
 defineOptions({ name: "ApiProviders" });
 
@@ -110,7 +105,7 @@ function getSuccessRateColor(rate: number) {
 async function loadProviders() {
   loading.value = true;
   try {
-    const data = await getAiProviders();
+    const data = await getProviders();
     providers.value = data;
     ElMessage.success(`成功加载 ${data.length} 个提供商`);
   } catch (error) {
@@ -214,7 +209,7 @@ onMounted(() => {
   .providers-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .provider-header {
     flex-direction: column;
     align-items: flex-start;

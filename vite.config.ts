@@ -10,8 +10,9 @@ import {
 } from "./build/utils";
 
 export default ({ mode }: ConfigEnv): UserConfigExport => {
-  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } =
+  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH, VITE_BASEURL } =
     wrapperEnv(loadEnv(mode, root));
+  console.log(import.meta.env);
   return {
     base: VITE_PUBLIC_PATH,
     root,
@@ -26,20 +27,9 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
       proxy: {
         "/v1": {
-          target: "http://192.168.0.81:8080/",
+          target: 'http://192.168.0.69:8080',
           changeOrigin: true,
           ws: true, // 支持WebSocket代理
-          configure: (proxy, _options) => {
-            proxy.on('error', (err, _req, _res) => {
-              console.log('proxy error', err);
-            });
-            proxy.on('proxyReq', (proxyReq, req, _res) => {
-              console.log('Sending Request to the Target:', req.method, req.url);
-            });
-            proxy.on('proxyRes', (proxyRes, req, _res) => {
-              console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
-            });
-          },
         },
         "/openai": {
           target: "https://api.openai.com",

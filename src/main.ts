@@ -53,6 +53,28 @@ import "tippy.js/themes/light.css";
 import VueTippy from "vue-tippy";
 app.use(VueTippy);
 
+// 全局错误处理
+window.addEventListener('error', (event) => {
+  if (event.error && event.error.message &&
+    (event.error.message.includes('split') ||
+      event.error.message.includes('Cannot read properties of undefined'))) {
+    console.warn('捕获到 split 相关错误，已进行全局处理:', event.error);
+    event.preventDefault();
+    return false;
+  }
+});
+
+// 全局未处理的 Promise 拒绝处理
+window.addEventListener('unhandledrejection', (event) => {
+  if (event.reason && event.reason.message &&
+    (event.reason.message.includes('split') ||
+      event.reason.message.includes('Cannot read properties of undefined'))) {
+    console.warn('捕获到 split 相关的 Promise 拒绝，已进行全局处理:', event.reason);
+    event.preventDefault();
+    return false;
+  }
+});
+
 getPlatformConfig(app).then(async config => {
   setupStore(app);
   app.use(router);
@@ -63,9 +85,9 @@ getPlatformConfig(app).then(async config => {
   // .use(useEcharts);
 
   // 初始化全局WebSocket任务管理
-  const { useWebSocketTaskStore } = await import("@/store/modules/websocketTask");
-  const taskStore = useWebSocketTaskStore();
-  taskStore.initWebSocket();
+  // const { useWebSocketTaskStore } = await import("@/store/modules/websocketTask");
+  // const taskStore = useWebSocketTaskStore();
+  // taskStore.initWebSocket();
 
   app.mount("#app");
 });

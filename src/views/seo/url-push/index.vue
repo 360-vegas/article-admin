@@ -243,6 +243,7 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import * as pushApi from '@/api/push'
+import { safeSplitAndFilter } from '@/utils/safeSplit'
 
 // 响应式数据
 const projectForm = reactive({
@@ -307,24 +308,15 @@ const groupedProjects = computed(() => {
 
 // 方法
 const updateDomains = () => {
-  projectForm.domains = domainsText.value
-    .split('\n')
-    .map(domain => domain.trim())
-    .filter(domain => domain)
+  projectForm.domains = safeSplitAndFilter(domainsText.value, '\n')
 }
 
 const updateTitleKeywords = () => {
-  projectForm.titleKeywords = titleKeywordsText.value
-    .split('\n')
-    .map(keyword => keyword.trim())
-    .filter(keyword => keyword)
+  projectForm.titleKeywords = safeSplitAndFilter(titleKeywordsText.value, '\n')
 }
 
 const updateExcludeWords = () => {
-  projectForm.excludeWords = excludeWordsText.value
-    .split('\n')
-    .map(word => word.trim())
-    .filter(word => word)
+  projectForm.excludeWords = safeSplitAndFilter(excludeWordsText.value, '\n')
 }
 
 const addProject = async () => {
@@ -507,8 +499,8 @@ const getIntervalText = (interval: string) => {
   return intervalMap[interval] || interval
 }
 
-const getStatusType = (status: string) => {
-  const statusMap: { [key: string]: string } = {
+const getStatusType = (status: string): 'primary' | 'success' | 'warning' | 'info' | 'danger' => {
+  const statusMap: { [key: string]: 'primary' | 'success' | 'warning' | 'info' | 'danger' } = {
     'running': 'warning',
     'success': 'success',
     'error': 'danger',
@@ -812,6 +804,3 @@ onMounted(() => {
   }
 }
 </style>
-
-
-

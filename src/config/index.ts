@@ -2,7 +2,18 @@ import axios from "axios";
 import type { App } from "vue";
 
 let config: object = {};
-const { VITE_PUBLIC_PATH } = import.meta.env;
+const { VITE_PUBLIC_PATH, BASE_URL } = import.meta.env as any;
+
+/**
+ * 生成安全的 publicPath，优先级：VITE_PUBLIC_PATH -> BASE_URL -> "/"
+ * 并规范结尾斜杠
+ */
+function getSafePublicPath(): string {
+  const candidates = [VITE_PUBLIC_PATH, BASE_URL, "/"];
+  const base = candidates.find(v => typeof v === "string" && v.length > 0) || "/";
+  // 规范为以 / 结尾
+  return base.endsWith("/") ? base : `${base}/`;
+}
 
 const setConfig = (cfg?: unknown) => {
   config = Object.assign(config, cfg);
@@ -29,9 +40,11 @@ const getConfig = (key?: string): PlatformConfigs => {
 /** 获取项目动态全局配置 */
 export const getPlatformConfig = async (app: App): Promise<undefined> => {
   app.config.globalProperties.$config = getConfig();
+  const publicPath = getSafePublicPath();
+  const url = `${publicPath}platform-config.json`;
   return axios({
     method: "get",
-    url: `${VITE_PUBLIC_PATH}platform-config.json`
+    url
   })
     .then(({ data: config }) => {
       let $config = app.config.globalProperties.$config;
