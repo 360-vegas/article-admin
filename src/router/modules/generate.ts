@@ -48,6 +48,15 @@ export default {
         showLink: true
       }
     },
+    {
+      path: "/generate/image-scraper",
+      name: "ImageScraper",
+      component: () => import("@/views/generate/image-scraper/index.vue"),
+      meta: {
+        title: "图片抓取",
+        showLink: true
+      }
+    },
     // {
     //   path: "/generate/wiki",
     //   name: "GenerateWiki",

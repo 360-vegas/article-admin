@@ -18,6 +18,8 @@ buttons:
   pureBackTop: BackTop
   pureOpenText: Open
   pureCloseText: Close
+  reset: Reset
+  clear: Clear
 search:
   pureTotal: Total
   pureHistory: History
@@ -83,6 +85,7 @@ menus:
   contentTag: Entries
   generate: Generate
   generateArticle: Article Generator
+  imageScraperTitle: Image Scraper
   seo: SEO
   seoInternalRules: Internal Links (On-site)
   seoExternalStrategy: External Strategy (Off-site)
@@ -115,6 +118,7 @@ menus:
   domainManagement: Domain Management
   domainSsl: SSL Certificates
   domainRules: Rule Management
+  domainBatchCheck: Domain Batch Check
 tag:
   title: Tag Name
   description: Description
@@ -215,6 +219,40 @@ domain:
   nameInvalid: Please enter a valid domain format
   settingsFeature: Domain settings feature in development
   backToDomainList: Back to Domain List
+  batchCheck:
+    configTitle: Domain Generation Config
+    resultTitle: Check Results
+    length: Domain Length
+    minLength: Min Length
+    maxLength: Max Length
+    quantity: Generation Quantity
+    suffix: Domain Suffix
+    selectSuffix: Select domain suffix
+    charType: Character Type
+    letters: Letters
+    numbers: Numbers
+    generate: Generate Domains
+    check: Batch Check
+    index: Index
+    domainName: Domain
+    status: Status
+    checkTime: Check Time
+    statusPending: Pending
+    statusChecking: Checking
+    statusAvailable: Possibly New
+    statusRegistered: Registered
+    statusMaybeNew: Unknown
+    statusError: Check Failed
+    selectCharType: Please select at least one character type
+    selectSuffixTip: Please select domain suffix
+    generateSuccess: "Successfully generated {count} domains"
+    cleared: Check results cleared
+    noDomains: Please generate domains first
+    checkComplete: "Check complete, {total} domains total, {available} possibly new"
+    alertTitle: DNS Check Mode
+    alertDescription: Check domain status via DNS query. Domains without DNS records are shown as "Possibly New" (may be unregistered), while those with DNS records are shown as "Registered". Please verify "Possibly New" domains with a registrar.
+    filterByStatus: Filter by Status
+    all: All
 dns:
   pageDescription: Manage DNS records with support for viewing, editing, deleting and batch operations
   name: Record Name
@@ -406,3 +444,20 @@ login:
   pureUsernameReg: Please enter username
   purePassWordReg: Please enter password
   purePassWordRuleReg: The password format should be any combination of 8-18 digits
+imageScraper:
+  inputUrl: Enter Web Page URL
+  urlPlaceholder: Enter the URL of the webpage to scrape images from
+  scrapeImages: Scrape Images
+  scraping: Scraping...
+  imagesFound: Found {count} images
+  noImagesFound: No images found
+  selectAll: Select All
+  deselectAll: Deselect All
+  downloadSelected: Download Selected
+  previewImage: Preview Image
+  downloadImage: Download Image
+  imageLoadError: Failed to load image
+  invalidUrl: Please enter a valid URL
+  scrapeError: Scraping failed, please check if the URL is correct
+  downloadSuccess: Downloaded successfully
+  downloadError: Download failed

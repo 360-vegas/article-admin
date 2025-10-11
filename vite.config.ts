@@ -27,7 +27,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
       proxy: {
         "/v1": {
-          target: 'http://192.168.0.69:8080',
+          target: 'https://api.czo.vn',
           changeOrigin: true,
           ws: true, // 支持WebSocket代理
         },
@@ -45,6 +45,11 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
           target: "https://api.openai.com/v1",
           changeOrigin: true,
           rewrite: path => path.replace(/^\/xai/, "")
+        },
+        "/domain": {
+          target: "http://localhost:3333",
+          changeOrigin: true,
+          ws: false
         }
       },
       // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布

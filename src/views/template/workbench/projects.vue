@@ -54,10 +54,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="JS脚本" prop="script">
-          <el-input v-model="form.script" type="textarea" :rows="5" placeholder="可粘贴<script>内部JS，保存时会自动包裹" />
+          <el-input v-model="form.script" type="textarea" :rows="5" placeholder="可粘贴 script 标签内部的 JS 代码，保存时会自动包裹" />
         </el-form-item>
         <el-form-item label="HTML头部" prop="headHtml">
-          <el-input v-model="form.headHtml" type="textarea" :rows="5" placeholder="粘贴<head>中需要追加的HTML片段" />
+          <el-input v-model="form.headHtml" type="textarea" :rows="5" placeholder="粘贴 head 标签中需要追加的 HTML 片段" />
         </el-form-item>
       </el-form>
       <template #footer>

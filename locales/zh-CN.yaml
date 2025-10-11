@@ -18,6 +18,8 @@ buttons:
   pureBackTop: 回到顶部
   pureOpenText: 开
   pureCloseText: 关
+  reset: 重置
+  clear: 清空
 search:
   pureTotal: 共
   pureHistory: 搜索历史
@@ -83,6 +85,7 @@ menus:
   contentTag: 词条
   generate: 生成
   generateArticle: 文章生成器
+  imageScraperTitle: 图片抓取
   seo: SEO
   seoInternalRules: 内链规则（站内）
   seoExternalStrategy: 外链策略（站外）
@@ -115,6 +118,7 @@ menus:
   domainManagement: 域名管理
   domainSsl: SSL 证书
   domainRules: 规则管理
+  domainBatchCheck: 域名批量检测
 tag:
   title: 词条名称
   description: 描述
@@ -215,6 +219,40 @@ domain:
   nameInvalid: 请输入有效的域名格式
   settingsFeature: 域名设置功能开发中
   backToDomainList: 返回域名列表
+  batchCheck:
+    configTitle: 域名生成配置
+    resultTitle: 检测结果
+    length: 域名长度
+    minLength: 最小长度
+    maxLength: 最大长度
+    quantity: 生成数量
+    suffix: 域名后缀
+    selectSuffix: 请选择域名后缀
+    charType: 字符类型
+    letters: 字母
+    numbers: 数字
+    generate: 生成域名
+    check: 批量检测
+    index: 序号
+    domainName: 域名
+    status: 状态
+    checkTime: 检测时间
+    statusPending: 待检测
+    statusChecking: 检测中
+    statusAvailable: 可能全新
+    statusRegistered: 已注册
+    statusMaybeNew: 未知状态
+    statusError: 检测失败
+    selectCharType: 请选择至少一种字符类型
+    selectSuffixTip: 请选择域名后缀
+    generateSuccess: "成功生成 {count} 个域名"
+    cleared: 已清空检测结果
+    noDomains: 请先生成域名
+    checkComplete: "检测完成，共 {total} 个域名，{available} 个可能全新"
+    alertTitle: DNS检测模式
+    alertDescription: 通过DNS查询检测域名状态。没有DNS记录的域名显示为"可能全新"（可能未注册），有DNS记录的显示为"已注册"。建议对"可能全新"的域名在注册商处二次确认。
+    filterByStatus: 按状态筛选
+    all: 全部
 dns:
   pageDescription: 管理DNS记录，支持查看、编辑、删除和批量操作
   name: 记录名称
@@ -482,3 +520,20 @@ seoPush:
   accountMissingBingApiKey: 缺少Bing API Key
   accountVerificationFailed: 验证完成-部分连接测试失败
   accountConnectionTestSuccess: 连接测试成功
+imageScraper:
+  inputUrl: 输入网页URL
+  urlPlaceholder: 请输入要抓取图片的网页地址
+  scrapeImages: 抓取图片
+  scraping: 正在抓取...
+  imagesFound: 找到 {count} 张图片
+  noImagesFound: 未找到图片
+  selectAll: 全选
+  deselectAll: 取消全选
+  downloadSelected: 下载选中
+  previewImage: 预览图片
+  downloadImage: 下载图片
+  imageLoadError: 图片加载失败
+  invalidUrl: 请输入有效的URL
+  scrapeError: 抓取失败，请检查URL是否正确
+  downloadSuccess: 下载成功
+  downloadError: 下载失败

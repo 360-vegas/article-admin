@@ -39,6 +39,15 @@ export default {
         title: $t("menus.domainRules"),
         showLink: true
       }
+    },
+    {
+      path: "/domain/batch-check",
+      name: "DomainBatchCheck",
+      component: () => import("@/views/domain/batch-check/index.vue"),
+      meta: {
+        title: $t("menus.domainBatchCheck"),
+        showLink: true
+      }
     }
   ]
 } satisfies RouteConfigsTable;
