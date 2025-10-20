@@ -1,4 +1,5 @@
 import { http } from "@/utils/http";
+import type { PureHttpRequestConfig } from "@/utils/http/types.d";
 
 export interface CloudflareZone {
   id: string;
@@ -87,11 +88,16 @@ export function deleteDnsRecordsByTypeAcrossZones(zoneIds: string[], type: strin
 }
 
 // 多域名：批量新增解析记录
-export function createDnsRecordsAcrossZones(zoneIds: string[], records: CreateDnsRecordDto[]) {
+export function createDnsRecordsAcrossZones(
+  zoneIds: string[],
+  records: CreateDnsRecordDto[],
+  axiosConfig?: PureHttpRequestConfig
+) {
   return http.request<{ results: any[] }>(
     "post",
     "/v1/cloudflare/records/batch-create-across-zones",
-    { data: { zone_ids: zoneIds, records } }
+    { data: { zone_ids: zoneIds, records } },
+    axiosConfig
   );
 }
 

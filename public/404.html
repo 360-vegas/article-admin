@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <title>词条未找到 - Wiki百科</title>
+  <link rel="stylesheet" href="/templates/styles.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: #fff;
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 30px;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .category-tag {
+      background-color: #fee2e2;
+      color: #dc2626;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb a {
+      color: #1976d2;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb span {
+      margin: 0 8px;
+    }
+
+    .search-query {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-query-icon {
+      font-size: 20px;
+    }
+
+    .search-query-text {
+      flex: 1;
+    }
+
+    .search-query-text strong {
+      color: #856404;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 30px;
+    }
+
+    .main-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .error-icon {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .error-icon svg {
+      width: 120px;
+      height: 120px;
+      opacity: 0.3;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e5e7eb;
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .suggestions-list {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .suggestions-list li {
+      margin-bottom: 12px;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .suggestions-list li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      color: #1976d2;
+    }
+
+    .search-box {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .search-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .search-button {
+      padding: 10px 20px;
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .search-button:hover {
+      background: #1565c0;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-box h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .popular-entries {
+      list-style: none;
+    }
+
+    .popular-entries li {
+      margin-bottom: 10px;
+    }
+
+    .popular-entries a {
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .popular-entries a:hover {
+      text-decoration: underline;
+    }
+
+    .entry-views {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .recent-additions {
+      list-style: none;
+    }
+
+    .recent-additions li {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .recent-additions .date {
+      color: #666;
+      font-size: 12px;
+      display: block;
+    }
+
+    .help-section {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .help-section h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #1976d2;
+    }
+
+    .help-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .help-links a {
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .help-links a:hover {
+      text-decoration: underline;
+    }
+
+    .create-entry-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .create-entry-box h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #0369a1;
+    }
+
+    .create-entry-box p {
+      margin-bottom: 15px;
+      color: #0c4a6e;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #1976d2;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1565c0;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #1976d2;
+      border: 1px solid #1976d2;
+    }
+
+    .btn-secondary:hover {
+      background: #f8f9fa;
+    }
+
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+  <div class="header">
+    <div class="header-content">
+      <nav class="breadcrumb">
+        <a href="/">🏠 首页</a>
+        <span>/</span>
+        <span>🔍 搜索结果</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <span class="category-tag">⚠️ 未找到词条</span>
+    <p class="subtitle">很抱歉，您查找的词条尚未被收录</p>
+
+    <div class="search-query">
+      <span class="search-query-icon">🔍</span>
+      <div class="search-query-text">
+        您搜索的词条：<strong id="searchTerm">[词条名称]</strong>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="main-content">
+        <div class="error-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              fill="currentColor" />
+          </svg>
+        </div>
+
+        <section class="section">
+          <h2>可能的原因</h2>
+          <ul class="suggestions-list">
+            <li>该词条尚未被创建或收录到我们的百科数据库中</li>
+            <li>词条名称可能存在拼写错误或使用了非标准名称</li>
+            <li>该词条可能已被删除、合并或重定向到其他词条</li>
+            <li>您访问的链接可能已过期或格式不正确</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2>建议操作</h2>
+          <div class="search-box">
+            <p style="margin-bottom: 15px;">您可以尝试重新搜索或使用相似的关键词：</p>
+            <form class="search-form" action="/search" method="get">
+              <input type="text" class="search-input" name="q" placeholder="输入词条名称进行搜索..." />
+              <button type="submit" class="search-button">搜索</button>
+            </form>
+          </div>
+
+          <ul class="suggestions-list">
+            <li>检查词条名称的拼写是否正确</li>
+            <li>尝试使用更通用或更具体的搜索词</li>
+            <li>浏览相关分类或标签页面寻找类似词条</li>
+            <li>查看"热门词条"或"最新添加"列表</li>
+          </ul>
+        </section>
+
+        <div class="create-entry-box">
+          <h3>想要创建这个词条？</h3>
+          <p>如果您认为这是一个值得收录的词条，并且您具有相关专业知识，欢迎您为我们的百科贡献内容。</p>
+          <a href="/create?title=" class="btn btn-primary" id="createLink">创建新词条</a>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="info-box">
+          <h3>🔥 热门词条</h3>
+          <ul class="popular-entries">
+            <li>
+              <a href="#">
+                <span>无产阶级</span>
+                <span class="entry-views">12.5k 浏览</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>工业革命</span>
+                <span class="entry-views">9.8k 浏览</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>全球化</span>
+                <span class="entry-views">8.2k 浏览</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>劳动经济学</span>
+                <span class="entry-views">6.7k 浏览</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>社会学</span>
+                <span class="entry-views">5.9k 浏览</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <h3>📅 最新添加</h3>
+          <ul class="recent-additions">
+            <li>
+              <a href="#">零工经济</a>
+              <span class="date">2024年10月13日</span>
+            </li>
+            <li>
+              <a href="#">平台劳动</a>
+              <span class="date">2024年10月12日</span>
+            </li>
+            <li>
+              <a href="#">数字化转型</a>
+              <span class="date">2024年10月11日</span>
+            </li>
+            <li>
+              <a href="#">碳中和</a>
+              <span class="date">2024年10月10日</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-box help-section">
+          <h4>💡 需要帮助？</h4>
+          <div class="help-links">
+            <a href="/help/search">搜索技巧指南</a>
+            <a href="/help/contribute">如何贡献词条</a>
+            <a href="/help/guidelines">编辑规范指南</a>
+            <a href="/contact">联系我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer-placeholder"></div>
+  </div>
+  <script src="/templates/components.js"></script>
+  <script>
+    // 从URL获取搜索词并显示
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTerm = urlParams.get('q') || urlParams.get('term') || '未知词条';
+    document.getElementById('searchTerm').textContent = searchTerm;
+
+    // 更新创建链接
+    const createLink = document.getElementById('createLink');
+    createLink.href = `/create?title=${encodeURIComponent(searchTerm)}`;
+  </script>
+</body>
+
+</html>

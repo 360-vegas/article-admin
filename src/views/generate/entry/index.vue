@@ -17,6 +17,16 @@
           <el-form-item label="词条名称" prop="entry_name">
             <el-input v-model="form.entry_name" placeholder="请输入词条名称" />
           </el-form-item>
+          <el-form-item label="语言" prop="lang">
+            <el-select v-model="form.lang" placeholder="请选择语言" style="width: 100%">
+              <el-option v-for="lang in languageOptions" :key="lang.code" :label="lang.label" :value="lang.code" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="词条分类" prop="category">
+            <el-select v-model="form.category" placeholder="请选择词条分类" clearable style="width: 100%">
+              <el-option v-for="cat in categoryOptions" :key="cat.slug" :label="cat.label" :value="cat.slug" />
+            </el-select>
+          </el-form-item>
           <el-form-item label="JSON提示词" prop="json_preset_code">
             <el-select v-model="form.json_preset_code" placeholder="请选择JSON提示词" clearable filterable
               style="width: 100%">
@@ -29,9 +39,6 @@
               <el-option v-for="p in promptList" :key="p.code" :label="p.name + ' (' + p.code + ')'" :value="p.code" />
             </el-select>
           </el-form-item> -->
-          <el-form-item label="语言" prop="lang">
-            <el-input v-model="form.lang" placeholder="如 zh、en" />
-          </el-form-item>
           <el-form-item label="国家/地区" prop="country_code">
             <el-input v-model="form.country_code" placeholder="如 CN、US" />
           </el-form-item>
@@ -92,8 +99,234 @@ defineOptions({ name: "EntryGenerator" });
 
 const promptList = ref<PromptPreset[]>([]);
 const formRef = ref<FormInstance>();
+
+// 语言选项列表
+const languageOptions = [
+  { code: 'zh', label: '中文' },
+  { code: 'en', label: 'English' },
+  { code: 'ja', label: '日本語' },
+  { code: 'ko', label: '한국어' },
+  { code: 'es', label: 'Español' },
+  { code: 'fr', label: 'Français' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'ru', label: 'Русский' },
+  { code: 'vi', label: 'Tiếng Việt' },
+  { code: 'hi', label: 'हिन्दी' }
+];
+
+// 词条分类列表
+const categoryOptions = [
+  { slug: 'person', label: '人物' },
+  { slug: 'geography', label: '地理' },
+  { slug: 'history', label: '历史' },
+  { slug: 'culture-art', label: '文化与艺术' },
+  { slug: 'science-tech', label: '科学与技术' },
+  { slug: 'society-politics', label: '社会与政治' },
+  { slug: 'brand-company', label: '品牌与企业' },
+  { slug: 'life-health', label: '生活与健康' },
+  { slug: 'religion-philosophy', label: '宗教与哲学' },
+  { slug: 'education-academic', label: '教育与学术' },
+  { slug: 'entertainment-media', label: '娱乐与媒体' },
+  { slug: 'internet-digital', label: '互联网与数字文化' },
+  { slug: 'nature-environment', label: '自然与环境' },
+  { slug: 'transport-architecture', label: '交通与建筑' },
+  { slug: 'military-defense', label: '军事与国防' }
+];
+
+// 多语言分类标签映射
+const categoryLabels = {
+  'person': {
+    'zh': '人物',
+    'en': 'Person',
+    'ja': '人物',
+    'ko': '인물',
+    'es': 'Persona',
+    'fr': 'Personne',
+    'de': 'Person',
+    'ru': 'Персона',
+    'vi': 'Nhân vật',
+    'hi': 'व्यक्ति'
+  },
+  'geography': {
+    'zh': '地理',
+    'en': 'Geography',
+    'ja': '地理',
+    'ko': '지리',
+    'es': 'Geografía',
+    'fr': 'Géographie',
+    'de': 'Geographie',
+    'ru': 'География',
+    'vi': 'Địa lý',
+    'hi': 'भूगोल'
+  },
+  'history': {
+    'zh': '历史',
+    'en': 'History',
+    'ja': '歴史',
+    'ko': '역사',
+    'es': 'Historia',
+    'fr': 'Histoire',
+    'de': 'Geschichte',
+    'ru': 'История',
+    'vi': 'Lịch sử',
+    'hi': 'इतिहास'
+  },
+  'culture-art': {
+    'zh': '文化与艺术',
+    'en': 'Culture & Art',
+    'ja': '文化と芸術',
+    'ko': '문화와 예술',
+    'es': 'Cultura y Arte',
+    'fr': 'Culture et Art',
+    'de': 'Kultur und Kunst',
+    'ru': 'Культура и искусство',
+    'vi': 'Văn hóa & Nghệ thuật',
+    'hi': 'संस्कृति और कला'
+  },
+  'science-tech': {
+    'zh': '科学与技术',
+    'en': 'Science & Technology',
+    'ja': '科学と技術',
+    'ko': '과학과 기술',
+    'es': 'Ciencia y Tecnología',
+    'fr': 'Science et Technologie',
+    'de': 'Wissenschaft und Technologie',
+    'ru': 'Наука и технологии',
+    'vi': 'Khoa học & Công nghệ',
+    'hi': 'विज्ञान और प्रौद्योगिकी'
+  },
+  'society-politics': {
+    'zh': '社会与政治',
+    'en': 'Society & Politics',
+    'ja': '社会と政治',
+    'ko': '사회와 정치',
+    'es': 'Sociedad y Política',
+    'fr': 'Société et Politique',
+    'de': 'Gesellschaft und Politik',
+    'ru': 'Общество и политика',
+    'vi': 'Xã hội & Chính trị',
+    'hi': 'समाज और राजनीति'
+  },
+  'brand-company': {
+    'zh': '品牌与企业',
+    'en': 'Brand & Company',
+    'ja': 'ブランドと企業',
+    'ko': '브랜드와 기업',
+    'es': 'Marca y Empresa',
+    'fr': 'Marque et Entreprise',
+    'de': 'Marke und Unternehmen',
+    'ru': 'Бренд и компания',
+    'vi': 'Thương hiệu & Doanh nghiệp',
+    'hi': 'ब्रांड और कंपनी'
+  },
+  'life-health': {
+    'zh': '生活与健康',
+    'en': 'Life & Health',
+    'ja': '生活と健康',
+    'ko': '생활과 건강',
+    'es': 'Vida y Salud',
+    'fr': 'Vie et Santé',
+    'de': 'Leben und Gesundheit',
+    'ru': 'Жизнь и здоровье',
+    'vi': 'Cuộc sống & Sức khỏe',
+    'hi': 'जीवन और स्वास्थ्य'
+  },
+  'religion-philosophy': {
+    'zh': '宗教与哲学',
+    'en': 'Religion & Philosophy',
+    'ja': '宗教と哲学',
+    'ko': '종교와 철학',
+    'es': 'Religión y Filosofía',
+    'fr': 'Religion et Philosophie',
+    'de': 'Religion und Philosophie',
+    'ru': 'Религия и философия',
+    'vi': 'Tôn giáo & Triết học',
+    'hi': 'धर्म और दर्शन'
+  },
+  'education-academic': {
+    'zh': '教育与学术',
+    'en': 'Education & Academic',
+    'ja': '教育と学術',
+    'ko': '교육과 학술',
+    'es': 'Educación y Academia',
+    'fr': 'Éducation et Académie',
+    'de': 'Bildung und Wissenschaft',
+    'ru': 'Образование и наука',
+    'vi': 'Giáo dục & Học thuật',
+    'hi': 'शिक्षा और शैक्षणिक'
+  },
+  'entertainment-media': {
+    'zh': '娱乐与媒体',
+    'en': 'Entertainment & Media',
+    'ja': 'エンターテインメントとメディア',
+    'ko': '엔터테인먼트와 미디어',
+    'es': 'Entretenimiento y Medios',
+    'fr': 'Divertissement et Médias',
+    'de': 'Unterhaltung und Medien',
+    'ru': 'Развлечения и медиа',
+    'vi': 'Giải trí & Truyền thông',
+    'hi': 'मनोरंजन और मीडिया'
+  },
+  'internet-digital': {
+    'zh': '互联网与数字文化',
+    'en': 'Internet & Digital Culture',
+    'ja': 'インターネットとデジタル文化',
+    'ko': '인터넷과 디지털 문화',
+    'es': 'Internet y Cultura Digital',
+    'fr': 'Internet et Culture Numérique',
+    'de': 'Internet und Digitale Kultur',
+    'ru': 'Интернет и цифровая культура',
+    'vi': 'Internet & Văn hóa số',
+    'hi': 'इंटरनेट और डिजिटल संस्कृति'
+  },
+  'nature-environment': {
+    'zh': '自然与环境',
+    'en': 'Nature & Environment',
+    'ja': '自然と環境',
+    'ko': '자연과 환경',
+    'es': 'Naturaleza y Medio Ambiente',
+    'fr': 'Nature et Environnement',
+    'de': 'Natur und Umwelt',
+    'ru': 'Природа и окружающая среда',
+    'vi': 'Thiên nhiên & Môi trường',
+    'hi': 'प्रकृति और पर्यावरण'
+  },
+  'transport-architecture': {
+    'zh': '交通与建筑',
+    'en': 'Transport & Architecture',
+    'ja': '交通と建築',
+    'ko': '교통과 건축',
+    'es': 'Transporte y Arquitectura',
+    'fr': 'Transport et Architecture',
+    'de': 'Verkehr und Architektur',
+    'ru': 'Транспорт и архитектура',
+    'vi': 'Giao thông & Kiến trúc',
+    'hi': 'परिवहन और वास्तुकला'
+  },
+  'military-defense': {
+    'zh': '军事与国防',
+    'en': 'Military & Defense',
+    'ja': '軍事と国防',
+    'ko': '군사와 국방',
+    'es': 'Militar y Defensa',
+    'fr': 'Militaire et Défense',
+    'de': 'Militär und Verteidigung',
+    'ru': 'Военное дело и оборона',
+    'vi': 'Quân sự & Quốc phòng',
+    'hi': 'सैन्य और रक्षा'
+  }
+};
+
+// 获取分类的本地化标签
+function getCategoryLabel(slug: string, lang: string): string {
+  const labels = categoryLabels[slug];
+  if (!labels) return slug;
+  return labels[lang] || labels['en'] || slug;
+}
+
 const form = reactive({
   entry_name: "",
+  category: "", // 新增分类字段
   json_preset_code: "",
   html_preset_code: "",
   lang: "zh",
@@ -106,7 +339,9 @@ const form = reactive({
   related_preset_code: ""
 });
 const rules = {
+  lang: [{ required: true, message: "请选择语言", trigger: "change" }],
   entry_name: [{ required: true, message: "请输入词条名称", trigger: "blur" }],
+  category: [{ required: true, message: "请选择词条分类", trigger: "change" }],
   json_preset_code: [{ required: true, message: "请选择JSON提示词", trigger: "change" }],
   html_preset_code: [{ required: true, message: "请选择HTML提示词", trigger: "change" }]
 } as any;
@@ -159,8 +394,13 @@ async function loadPrompts() {
 }
 
 function buildBaseData() {
+  // 根据语言获取分类的本地化标签
+  const categoryLabel = form.category ? getCategoryLabel(form.category, form.lang) : '';
+
   return {
     entry_name: form.entry_name,
+    category: form.category,
+    category_label: categoryLabel, // 添加本地化的分类标签
     json_preset_code: form.json_preset_code,
     lang: form.lang,
     country_code: form.country_code,

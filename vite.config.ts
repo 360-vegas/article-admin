@@ -27,7 +27,8 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
       proxy: {
         "/v1": {
-          target: 'https://api.czo.vn',
+          // target: 'https://api.czo.vn',
+          target: 'http://192.168.0.69:8080',
           changeOrigin: true,
           ws: true, // 支持WebSocket代理
         },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, computed } from "vue";
 import { Plus } from "@element-plus/icons-vue";
-import { ElMessage, ElMessageBox, FormInstance, FormRules } from "element-plus";
+import { ElMessage, ElMessageBox, ElNotification, FormInstance, FormRules } from "element-plus";
 import { useI18n } from "vue-i18n";
 import { safeSplitAndFilter } from "@/utils/safeSplit";
 import {
@@ -9,13 +9,13 @@ import {
   getDnsRecords,
   createDnsRecord,
   updateDnsRecord,
+  updateDnsRecordsBatch,
   deleteDnsRecord,
   deleteDnsRecordsByType,
   deleteDnsRecordsBatch,
   deleteLocalDomainsBatch,
   createDnsRecordsBatch,
   deleteDnsRecordsByTypeAcrossZones,
-  createDnsRecordsAcrossZones,
   getDomainGroups,
   batchAssignDomainGroup,
   createOrUpdateDomainGroup,
@@ -45,6 +45,85 @@ function handleGroupFilterChange(val?: string) {
     openGroupDialog();
   } else {
     prevGroupFilterId.value = val;
+  }
+}
+
+const progress = reactive({ visible: false, total: 0, done: 0, success: 0, skipped: 0, failed: 0 });
+const progressPercent = computed(() => (progress.total ? Math.round((progress.done / progress.total) * 100) : 0));
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+function isSkipError(msg: string) {
+  const m = (msg || "").toLowerCase();
+  return m.includes("already exists") || m.includes("81054") || m.includes("records with same name") || m.includes("same name");
+}
+function extractErrorMessage(e: any): string {
+  const r = e?.response;
+  const d = r?.data;
+  if (typeof d === "string") return d;
+  if (d?.message) return String(d.message);
+  if (d?.error) return String(d.error);
+  if (Array.isArray(d?.errors)) return d.errors.map((x: any) => (x?.message || x)).join("; ");
+  return e?.message || "Internal Server Error";
+}
+function toFqdn(name: string, zone: string) {
+  const n = (name || "").trim();
+  const z = (zone || "").trim();
+  if (!n) return n;
+  const lower = n.toLowerCase();
+  const zl = z.toLowerCase();
+  if (lower === "@") return z;
+  if (lower === "*") return `*.${z}`;
+  if (lower.endsWith(`.${zl}`)) return n;
+  if (lower.includes(".")) return n;
+  return `${n}.${z}`;
+}
+function namesMatch(desiredName: string, cfName: string, zone: string) {
+  const a = toFqdn(desiredName, zone).toLowerCase();
+  const b = toFqdn(cfName || "", zone).toLowerCase();
+  return a === b;
+}
+function findDesiredInChunk(rc: any[], recName: string, zoneName: string) {
+  const target = toFqdn(recName, zoneName).toLowerCase();
+  return rc.find(r => toFqdn(r?.name || "", zoneName).toLowerCase() === target);
+}
+const autoModifyOnDuplicate = ref(true);
+const zoneRecordsCache = new Map<string, DnsRecord[]>();
+
+async function handleDuplicateUpdate(zoneId: string, desired: { type: string; name: string; content: string; ttl: number; proxied: boolean; }): Promise<boolean> {
+  try {
+    let list = zoneRecordsCache.get(zoneId);
+    if (!list) {
+      const res = await getDnsRecords(zoneId);
+      list = res.data || [];
+      zoneRecordsCache.set(zoneId, list);
+    }
+    const zoneName = zones.value.find(z => z.id === zoneId)?.name || "";
+    const sameName = (list || []).filter(r => namesMatch(desired.name, r.name, zoneName));
+    const desiredType = (desired.type || "").toUpperCase();
+    if (desiredType === "CNAME") {
+      const toDelete = sameName.filter(r => (r.type || "").toUpperCase() !== "CNAME");
+      for (const r of toDelete) { await deleteDnsRecord(zoneId, r.id); }
+      const cnameExisting = sameName.filter(r => (r.type || "").toUpperCase() === "CNAME");
+      if (cnameExisting.length) {
+        await updateDnsRecord(zoneId, cnameExisting[0].id, { content: desired.content, ttl: desired.ttl, proxied: desired.proxied });
+      } else {
+        await createDnsRecord(zoneId, { ...desired });
+      }
+      zoneRecordsCache.delete(zoneId);
+      return true;
+    } else {
+      const cnameExisting = sameName.filter(r => (r.type || "").toUpperCase() === "CNAME");
+      for (const r of cnameExisting) { await deleteDnsRecord(zoneId, r.id); }
+      const sameType = sameName.filter(r => (r.type || "").toUpperCase() === desiredType);
+      if (sameType.length) {
+        await updateDnsRecord(zoneId, sameType[0].id, { content: desired.content, ttl: desired.ttl, proxied: desired.proxied });
+      } else {
+        await createDnsRecord(zoneId, { ...desired });
+      }
+      zoneRecordsCache.delete(zoneId);
+      return true;
+    }
+  } catch (e) {
+    return false;
   }
 }
 
@@ -137,6 +216,14 @@ async function saveRowEdit(row: DnsRecord) {
 }
 
 const rules: FormRules = {
+  type: [{ required: true, message: t("dns.typeRequired"), trigger: "change" }],
+  name: [{ required: true, message: t("dns.nameRequired"), trigger: "blur" }],
+  content: [{ required: true, message: t("dns.contentRequired"), trigger: "blur" }],
+  ttl: [{ required: true, message: t("dns.ttlRequired"), trigger: "change" }]
+};
+
+const batchCreateRules: FormRules = {
+  domains: [{ required: true, message: "请输入域名或 Zone ID 列表", trigger: "blur" }],
   type: [{ required: true, message: t("dns.typeRequired"), trigger: "change" }],
   name: [{ required: true, message: t("dns.nameRequired"), trigger: "blur" }],
   content: [{ required: true, message: t("dns.contentRequired"), trigger: "blur" }],
@@ -239,32 +326,284 @@ async function handleDeleteRecordsByType() {
   }
 }
 
-// 批量新增记录（JSON）
+// 批量新增记录
 const showBatchCreate = ref(false);
-const batchCreateText = ref(
-  '[\n  { "type": "A", "name": "www", "content": "1.2.3.4", "ttl": 300, "proxied": false }\n]'
-);
+const batchCreateForm = reactive({
+  domains: "", // 多个域名，逗号或换行分隔
+  type: "A",
+  name: "", // DNS记录名称（主机名）
+  content: "",
+  ttl: 300,
+  proxied: false
+});
+const batchCreateFormRef = ref<FormInstance | null>(null);
+const batchSubmitting = ref(false);
+
+function chunk<T>(arr: T[], size: number) {
+  const res: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) res.push(arr.slice(i, i + size));
+  return res;
+}
 
 async function handleBatchCreateRecords() {
+  if (!batchCreateFormRef.value) return;
+  const valid = await batchCreateFormRef.value.validate();
+  if (!valid) return;
+
   try {
-    const records: any = JSON.parse(batchCreateText.value || "[]");
-    if (!Array.isArray(records) || records.length === 0) {
-      ElMessage.warning("请填写有效的记录数组");
+    batchSubmitting.value = true;
+    // 解析域名或 Zone ID 列表
+    const inputList = safeSplitAndFilter(batchCreateForm.domains, /[,\n]/);
+    if (inputList.length === 0) {
+      ElMessage.warning("请至少输入一个域名或 Zone ID");
       return;
     }
-    if (selectedZoneIds.value.length > 1) {
-      await createDnsRecordsAcrossZones(selectedZoneIds.value, records);
-      ElMessage.success("已发起多域名创建");
-    } else {
-      if (!selectedZoneId.value) return;
-      await createDnsRecordsBatch(selectedZoneId.value, records);
-      ElMessage.success("创建成功");
+
+    // 先确保域名列表已加载
+    if (zones.value.length === 0) {
+      ElMessage.warning("正在加载域名列表，请稍后再试");
+      await loadZones();
+      if (zones.value.length === 0) {
+        ElMessage.error("无法获取域名列表，请刷新页面");
+        return;
+      }
+    }
+
+    // 智能处理输入：判断是域名还是 Zone ID
+    const zoneIds: string[] = [];
+    const notFoundDomains: string[] = [];
+
+    for (const input of inputList) {
+      const trimmedInput = input.trim();
+
+      // 判断是否为 Zone ID（32位十六进制字符串）
+      if (/^[a-f0-9]{32}$/i.test(trimmedInput)) {
+        // 直接作为 Zone ID 使用
+        zoneIds.push(trimmedInput);
+      } else {
+        // 作为域名处理，查找对应的 Zone ID
+        const zone = zones.value.find(z =>
+          z.name.toLowerCase() === trimmedInput.toLowerCase()
+        );
+
+        if (zone) {
+          zoneIds.push(zone.id);
+        } else {
+          notFoundDomains.push(trimmedInput);
+        }
+      }
+    }
+
+    // 如果有未找到的域名，提示用户
+    if (notFoundDomains.length > 0) {
+      const domainList = notFoundDomains.length > 5
+        ? notFoundDomains.slice(0, 5).join('\n') + `\n... 还有 ${notFoundDomains.length - 5} 个域名`
+        : notFoundDomains.join('\n');
+
+      ElNotification({
+        title: '域名未找到',
+        message: `以下域名未在当前系统中找到：\n${domainList}\n\n请确认：\n1. 域名是否已添加到 Cloudflare\n2. 您是否有权限管理这些域名\n3. 或点击刷新按钮更新域名列表`,
+        type: 'warning',
+        duration: 15000,
+        position: 'top-right'
+      });
+
+      if (zoneIds.length === 0) {
+        ElMessage.error('没有有效的域名可以执行操作');
+        return;
+      }
+
+      // 即使有部分域名未找到，仍继续为已找到的域名添加记录
+      ElMessage.info(`将为 ${zoneIds.length} 个域名添加记录`);
+    }
+
+    // 解析主机名列表（支持多个主机名）
+    const hostnames = safeSplitAndFilter(batchCreateForm.name, /[,，\s]+/);
+    if (hostnames.length === 0) {
+      ElMessage.warning("请输入至少一个主机名");
+      return;
+    }
+
+    // 为每个主机名创建记录
+    const records = hostnames.map(hostname => ({
+      type: batchCreateForm.type,
+      name: hostname.trim(),
+      content: batchCreateForm.content,
+      ttl: batchCreateForm.ttl,
+      proxied: batchCreateForm.proxied
+    }));
+
+    progress.visible = true;
+    progress.total = zoneIds.length * records.length;
+    progress.done = 0;
+    progress.success = 0;
+    progress.skipped = 0;
+    progress.failed = 0;
+
+    const zoneChunks = chunk(zoneIds, 16);
+    const failedDetails: string[] = [];
+    const skippedDetails: string[] = [];
+
+    async function processZone(zoneId: string) {
+      const domainName = zones.value.find(z => z.id === zoneId)?.name || zoneId;
+      let list = zoneRecordsCache.get(zoneId);
+      if (!list) {
+        const res = await getDnsRecords(zoneId);
+        list = res.data || [];
+        zoneRecordsCache.set(zoneId, list);
+      }
+      const deletes: string[] = [];
+      const updates: { id: string; content: string; ttl: number; proxied: boolean }[] = [];
+      const creates: { type: string; name: string; content: string; ttl: number; proxied: boolean }[] = [];
+      for (const rec of records) {
+        const sameName = (list || []).filter(r => namesMatch(rec.name, r.name, domainName));
+        const desiredType = (rec.type || "").toUpperCase();
+        const sameType = sameName.find(r => (r.type || "").toUpperCase() === desiredType);
+        const cnameConflict = sameName.find(r => (r.type || "").toUpperCase() === "CNAME" && desiredType !== "CNAME");
+        const otherConflict = sameName.find(r => (r.type || "").toUpperCase() !== desiredType && (r.type || "").toUpperCase() !== "CNAME" && desiredType === "CNAME");
+        if (sameType) {
+          const needUpdate = sameType.content !== rec.content || sameType.ttl !== rec.ttl || !!sameType.proxied !== !!rec.proxied;
+          if (needUpdate) updates.push({ id: sameType.id, content: rec.content, ttl: rec.ttl, proxied: rec.proxied });
+          else { progress.skipped++; progress.done++; }
+        } else if (autoModifyOnDuplicate.value && (cnameConflict || otherConflict)) {
+          const toDel = sameName.map(r => r.id);
+          for (const id of toDel) deletes.push(id);
+          creates.push(rec);
+        } else if (sameName.length > 0 && isSkipError("already exists")) {
+          progress.skipped++;
+          progress.done++;
+          skippedDetails.push(`${domainName} - ${rec.name}: already exists`);
+        } else {
+          creates.push(rec);
+        }
+      }
+
+      const delChunks = chunk(deletes, 50);
+      for (const dc of delChunks) {
+        if (dc.length === 0) continue;
+        try { await deleteDnsRecordsBatch(zoneId, dc); } catch (e) {
+          for (const id of dc) { try { await deleteDnsRecord(zoneId, id); } catch (_) { } }
+        }
+      }
+
+      const updChunks = chunk(updates, 20);
+      for (const uc of updChunks) {
+        if (uc.length === 0) continue;
+        try {
+          await updateDnsRecordsBatch(zoneId, uc);
+          progress.success += uc.length;
+          progress.done += uc.length;
+        } catch (e) {
+          for (const u of uc) {
+            try { await updateDnsRecord(zoneId, u.id, { content: u.content, ttl: u.ttl, proxied: u.proxied }); progress.success++; }
+            catch (er) { progress.failed++; failedDetails.push(`${domainName} - ${u.id}: ${extractErrorMessage(er)}`); }
+            finally { progress.done++; await sleep(30); }
+          }
+        }
+      }
+
+      const crtChunks = chunk(creates, 20);
+      for (const cc of crtChunks) {
+        if (cc.length === 0) continue;
+        try {
+          await createDnsRecordsBatch(zoneId, cc);
+          progress.success += cc.length;
+          progress.done += cc.length;
+        } catch (e) {
+          for (const c of cc) {
+            try { await createDnsRecord(zoneId, c); progress.success++; }
+            catch (er) {
+              const em = extractErrorMessage(er);
+              if (isSkipError(em) && autoModifyOnDuplicate.value) {
+                const ok = await handleDuplicateUpdate(zoneId, c);
+                if (ok) progress.success++; else { progress.failed++; failedDetails.push(`${domainName} - ${c.name}: ${em}`); }
+              } else if (isSkipError(em)) { progress.skipped++; skippedDetails.push(`${domainName} - ${c.name}: ${em}`); }
+              else { progress.failed++; failedDetails.push(`${domainName} - ${c.name}: ${em}`); }
+            }
+            finally { progress.done++; await sleep(30); }
+          }
+        }
+      }
+      zoneRecordsCache.delete(zoneId);
+    }
+
+    for (const zc of zoneChunks) {
+      await Promise.all(zc.map(z => processZone(z)));
+      await sleep(120);
+    }
+    // 最终汇总基于进度计数与细节数组
+    const totalSuccess = progress.success;
+    const totalFailed = progress.failed;
+    const totalSkipped = progress.skipped;
+    if (totalSuccess > 0 && totalFailed === 0) {
+      if (totalSkipped > 0) {
+        ElNotification({
+          title: '完成',
+          message: `成功 ${totalSuccess} 条，跳过 ${totalSkipped} 条`,
+          type: 'success',
+          duration: 6000,
+          position: 'top-right'
+        });
+      } else {
+        ElMessage.success(`成功创建 ${totalSuccess} 条记录`);
+      }
+    } else if (totalSuccess > 0 && totalFailed > 0) {
+      ElNotification({
+        title: '操作部分成功',
+        message: `成功 ${totalSuccess} 条，跳过 ${totalSkipped} 条，失败 ${totalFailed} 条`,
+        type: 'warning',
+        duration: 8000,
+        position: 'top-right'
+      });
+    }
+    if (totalFailed > 0) {
+      if (failedDetails.length > 3) {
+        ElNotification({
+          title: '部分记录创建失败',
+          message: `<div style="max-height: 300px; overflow-y: auto;">\
+            <p>共有 ${totalFailed} 条记录创建失败：</p>\
+            <ul style="margin: 5px 0; padding-left: 20px;">\
+              ${failedDetails.map(detail => `<li style=\"margin: 3px 0;\">${detail}</li>`).join('')}\
+            </ul>\
+          </div>`,
+          type: 'error',
+          duration: 15000,
+          position: 'top-right',
+          dangerouslyUseHTMLString: true
+        });
+      } else {
+        failedDetails.forEach(detail => { ElMessage.error(detail); });
+      }
+    }
+    if (totalSkipped > 0 && skippedDetails.length > 0 && skippedDetails.length <= 3) {
+      skippedDetails.forEach(detail => { ElMessage.info(`跳过：${detail}`); });
+    }
+
+    progress.visible = false;
+    showBatchCreate.value = false;
+    resetBatchCreateForm();
+    // 如果当前正在查看某个域名的记录，检查是否需要刷新
+    if (selectedZoneId.value && zoneIds.includes(selectedZoneId.value)) {
       await loadRecords();
     }
-    showBatchCreate.value = false;
-  } catch (e) {
-    ElMessage.error("创建失败，请检查JSON格式");
+  } catch (e: any) {
+    ElMessage.error(e.message || "创建失败");
+  } finally {
+    progress.visible = false;
+    batchSubmitting.value = false;
   }
+}
+
+function resetBatchCreateForm() {
+  Object.assign(batchCreateForm, {
+    domains: "",
+    type: "A",
+    name: "",
+    content: "",
+    ttl: 300,
+    proxied: false
+  });
+  batchCreateFormRef.value?.resetFields();
 }
 
 function handleCreate() {
@@ -455,8 +794,7 @@ async function submitBatchAssign() {
         </el-select>
         <el-button type="warning" :disabled="!batchDeleteType || selectedZoneIds.length === 0"
           @click="handleDeleteRecordsByType">删除所选域名该类型记录</el-button>
-        <el-button type="primary" :disabled="selectedZoneIds.length === 0"
-          @click="() => { showBatchCreate = true; }">批量新增记录</el-button>
+        <el-button type="primary" @click="() => { showBatchCreate = true; }">跨域名批量新增记录</el-button>
         <el-button type="danger" :disabled="selectedZoneIds.length === 0"
           @click="handleBatchDeleteDomains">批量删除域名</el-button>
         <!-- <el-button @click="openGroupDialog">新增/更新分组</el-button> -->
@@ -615,13 +953,57 @@ async function submitBatchAssign() {
       </template>
     </el-dialog>
 
-    <el-dialog v-model="showBatchCreate" title="批量新增记录" width="720px">
-      <div style="margin-bottom: 8px; color: var(--el-text-color-secondary);">请粘贴 JSON 数组（记录字段：type, name, content, ttl,
-        proxied）。</div>
-      <el-input v-model="batchCreateText" type="textarea" :rows="12" />
+    <el-dialog v-model="showBatchCreate" title="批量新增记录（跨域名）" width="680px" @closed="resetBatchCreateForm"
+      :close-on-click-modal="!batchSubmitting" :close-on-press-escape="!batchSubmitting">
+      <div style="margin-bottom: 12px; color: var(--el-text-color-secondary);">
+        为多个域名批量添加相同的DNS记录。支持同时创建多个主机名记录。<br>
+        <strong>提示：</strong>请输入已添加到 Cloudflare 的域名，或直接输入 Zone ID。<br>
+        示例：为 example1.com 和 example2.com 同时添加 @（根域名）和 www 的 A 记录。
+      </div>
+      <el-form ref="batchCreateFormRef" :model="batchCreateForm" :rules="batchCreateRules" label-width="100px">
+        <el-form-item label="域名/Zone ID" prop="domains">
+          <el-input v-model="batchCreateForm.domains" type="textarea" :rows="5"
+            placeholder="请输入域名或Zone ID，每行一个或用逗号分隔&#10;例如：&#10;example1.com&#10;example2.com&#10;test.com,demo.com" />
+        </el-form-item>
+        <el-form-item :label="$t('dns.name')" prop="name">
+          <el-input v-model="batchCreateForm.name" placeholder="主机名，支持多个（逗号或空格分隔），如：@ www * api" />
+        </el-form-item>
+        <el-form-item :label="$t('dns.type')" prop="type">
+          <el-select v-model="batchCreateForm.type" style="width: 160px">
+            <el-option v-for="t in ['A', 'AAAA', 'CNAME', 'TXT', 'MX', 'NS', 'SRV', 'CAA']" :key="t" :label="t"
+              :value="t" />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('dns.content')" prop="content">
+          <el-input v-model="batchCreateForm.content" placeholder="例如：1.2.3.4" />
+        </el-form-item>
+        <el-form-item :label="$t('dns.ttl')" prop="ttl">
+          <el-select v-model="batchCreateForm.ttl" style="width: 160px">
+            <el-option v-for="v in [60, 120, 300, 600, 1200, 3600]" :key="v" :label="v" :value="v" />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('dns.proxy')" prop="proxied">
+          <el-switch v-model="batchCreateForm.proxied" />
+        </el-form-item>
+      </el-form>
+      <div v-if="progress.visible"
+        style="margin-top: 8px; padding: 10px; border: 1px solid var(--el-border-color); border-radius: 6px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+          <el-progress :percentage="progressPercent"
+            :status="progress.failed > 0 ? 'exception' : (progress.done === progress.total ? 'success' : undefined)"
+            style="flex:1" />
+          <span style="white-space:nowrap;">{{ progress.done }} / {{ progress.total }}</span>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <el-tag type="success">成功 {{ progress.success }}</el-tag>
+          <el-tag type="warning">跳过 {{ progress.skipped }}</el-tag>
+          <el-tag type="danger">失败 {{ progress.failed }}</el-tag>
+        </div>
+      </div>
       <template #footer>
-        <el-button @click="showBatchCreate = false">取消</el-button>
-        <el-button type="primary" @click="handleBatchCreateRecords">提交</el-button>
+        <el-button :disabled="batchSubmitting" @click="showBatchCreate = false">取消</el-button>
+        <el-button type="primary" :loading="batchSubmitting" :disabled="batchSubmitting"
+          @click="handleBatchCreateRecords">提交</el-button>
       </template>
     </el-dialog>
 
@@ -693,6 +1075,31 @@ async function submitBatchAssign() {
       .right>*:not(:first-child) {
         margin-left: 8px;
       }
+    }
+  }
+}
+
+/* 未注册域名通知框的自定义样式 */
+:deep(.unregistered-domains-notification) {
+  .el-notification__content {
+    white-space: pre-line;
+    font-size: 14px;
+  }
+
+  .el-notification__title {
+    font-weight: bold;
+  }
+}
+
+/* 错误详情列表样式 */
+:deep(.el-notification__content) {
+  ul {
+    list-style-type: disc;
+
+    li {
+      font-size: 13px;
+      line-height: 1.6;
+      word-break: break-all;
     }
   }
 }
